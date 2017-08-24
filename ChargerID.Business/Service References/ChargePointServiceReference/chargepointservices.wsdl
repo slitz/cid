@@ -1,0 +1,1617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:dictionary:com.chargepoint.webservices" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:css="urn:provider/interface/chargepointservices/" name="chargepointservices" targetNamespace="urn:dictionary:com.chargepoint.webservices" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:dictionary:com.chargepoint.webservices">
+      <xsd:element name="getPublicStations">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:stationSearchRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getPublicStationsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationData" type="tns:stationData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="stationSearchRequest">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="serialNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Proximity" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" default="M" name="proximityUnit" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Voltage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Current" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="demoSerialNumber" type="tns:serialNumberData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Reservable" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Level" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Mode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Pricing" type="tns:pricingOptions" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="geoData">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="Lat" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Long" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="pricingOptions">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="startTime" type="xsd:time" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Duration" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="energyRequired" type="xsd:double" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="vehiclePower" type="xsd:double" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="serialNumberData">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="unbounded" name="serialNumber" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="stationData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationMacAddr" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationSerialNum" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Port" type="tns:portData" />
+          <xsd:element minOccurs="0" maxOccurs="2" name="Pricing" type="tns:pricingSpecification" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="numPorts" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="mainPhone" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="modTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="timezoneOffset" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="currencyCode" type="tns:currencyCodeType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getStationData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationMacAddr" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationSerialNum" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationActivationDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Port" type="tns:portData" />
+          <xsd:element minOccurs="0" maxOccurs="2" name="Pricing" type="tns:pricingSpecification" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="numPorts" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="driverName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="driverAddress" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="driverEmail" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="driverPhoneNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastModifiedDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="mainPhone" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="modTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="timezoneOffset" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="currencyCode" type="tns:currencyCodeType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="pricingSpecification">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Type" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startTime" type="xsd:time" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="endTime" type="xsd:time" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="minPrice" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="maxPrice" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="initialUnitPriceDuration" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="unitPricePerHour" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="unitPricePerHourThereafter" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="unitPricePerSession" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="unitPricePerKWh" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sessionTime" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="portData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Description" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Reservable" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Level" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="timeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Mode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Voltage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Current" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="estimatedCost" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getPublicStationStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:statusSearchdata" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getPublicStationStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationStatusData" type="tns:oStatusdata" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="statusSearchdata">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationIDs" type="tns:stationIdList" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Proximity" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" default="M" name="proximityUnit" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Voltage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Current" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portDetails" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="demoSerialNumber" type="tns:serialNumberData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Reservable" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Level" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Mode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Pricing" type="tns:pricingOptions" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="getStationStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:statusSearchdataForGetStations" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStationStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationData" type="tns:oStatusdata" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="moreFlag" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="statusSearchdataForGetStations">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationIDs" type="tns:stationIdList" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Proximity" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" default="M" name="proximityUnit" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Voltage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Current" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portDetails" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="demoSerialNumber" type="tns:serialNumberData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Reservable" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Level" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Mode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Pricing" type="tns:pricingOptions" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startRecord" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="numStations" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="stationIdList">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="unbounded" name="stationID" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="oStatusdata">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="unbounded" name="Port" type="tns:portDataStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="portDataStatus">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="portNumber" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Status" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="TimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getAlarms">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:getAlarmsSearchQuery" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getAlarmsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="Alarms" type="tns:oalarms" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="moreFlag" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="oalarms">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationSerialNum" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="alarmType" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="alarmTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="recordNumber" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="clearAlarms">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:clearAlarmsSearchQuery" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="clearAlarmsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="getAlarmsSearchQuery">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="endTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startRecord" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="numTransactions" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="clearAlarmsSearchQuery">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="endTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="alarmType" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="clearReason" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="shedLoad">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="shedQuery" type="tns:shedLoadQueryInputData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="shedLoadResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Success" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="allowedLoadPerStation" type="xsd:decimal" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="percentShedPerStation" type="tns:percentShedRange" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Ports">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="1" maxOccurs="unbounded" name="Port">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="portNumber" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="allowedLoadPerPort" type="xsd:decimal" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="percentShedPerPort" type="tns:percentShedRange" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="clearShedState">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="shedQuery" type="tns:shedQueryInputData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="clearShedStateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="Success" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLoad">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+                  <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLoadResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="numStations" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="groupName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="sgLoad" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationData" type="tns:stationloaddata" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="stationloaddata">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationLoad" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Port" type="tns:stationPortData" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="stationPortData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="credentialID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="shedState" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portLoad" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="allowedLoad" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="percentShed" type="tns:percentShedRange" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="percentShedRange">
+        <xsd:restriction base="xsd:int">
+          <xsd:minInclusive value="0" />
+          <xsd:maxInclusive value="100" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="shedQueryInputData">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="shedGroup" type="tns:shedGroupInputData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="shedStation" type="tns:shedStationInputData" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="shedLoadQueryInputData">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="shedGroup" type="tns:shedLoadGroupInputData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="shedStation" type="tns:shedLoadStationInputData" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="timeInterval" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="shedGroupInputData">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="sgID" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="shedStationInputData">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Ports" type="tns:portsDataBlock" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="portsDataBlock">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="unbounded" name="Port" type="tns:portDataShed" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="portDataShed">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="portNumber" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="shedLoadGroupInputData">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="sgID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="allowedLoadPerStation" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="percentShedPerStation" type="tns:percentShedRange" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="shedLoadStationInputData">
+        <xsd:all>
+          <xsd:element minOccurs="1" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="allowedLoadPerStation" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="percentShedPerStation" type="tns:percentShedRange" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Ports">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="1" maxOccurs="unbounded" name="Port">
+                  <xsd:complexType>
+                    <xsd:all>
+                      <xsd:element minOccurs="1" maxOccurs="1" name="portNumber" type="xsd:string" />
+                      <xsd:element minOccurs="0" maxOccurs="1" name="allowedLoadPerPort" type="xsd:decimal" />
+                      <xsd:element minOccurs="0" maxOccurs="1" name="percentShedPerPort" type="tns:percentShedRange" />
+                    </xsd:all>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="getStationGroups">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="orgID" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStationGroupsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="groupData" type="tns:groupsdata" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="groupsdata">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationData">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+                <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getUsers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:getUsersSearchRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="users" type="tns:userParams" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTransactionData">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:getTransDataSearchRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTransactionDataResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="transactions" type="tns:transDataParams" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="MoreFlag" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getChargingSessionData">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="searchQuery" type="tns:sessionSearchdata" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getChargingSessionDataResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="ChargingSessionData" type="tns:sessionSearchResultdata" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="MoreFlag" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="sessionSearchdata">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sessionID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Proximity" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="proximityUnit" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="fromTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="toTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startRecord" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="sessionSearchResultdata">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sessionID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Energy" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="endTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="recordNumber" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="credentialID" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="get15minChargingSessionData">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="energyConsumedInterval" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="get15minChargingSessionDataResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="fifteenminData" type="tns:oChargingSessionsData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="oChargingSessionsData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="energyConsumed" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="peakPower" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="rollingPowerAvg" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getOrgsAndStationGroups">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:getOrgsAndStationGroupsSearchQuery" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="getOrgsAndStationGroupsSearchQuery">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="getOrgsAndStationGroupsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="orgData" type="tns:ohostdata" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ohostdata">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="sgData">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+                <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+                <xsd:element minOccurs="0" maxOccurs="1" name="parentGroupID" type="xsd:string" />
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getStationGroupDetails">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sgID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStationGroupDetailsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="groupName" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="numStations" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="groupData" type="tns:childGroupData" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationData" type="tns:stationGroupData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="stationGroupData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="childGroupData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getStations">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:stationSearchRequestExtended" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStationsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationData" type="tns:stationDataExtended" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="moreFlag" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="stationSearchRequestExtended">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="serialNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Proximity" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" default="M" name="proximityUnit" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Voltage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Current" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="demoSerialNumber" type="tns:serialNumberData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Reservable" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Level" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Mode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Pricing" type="tns:pricingOptions" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationActivationDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startRecord" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="numStations" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="stationDataExtended">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns:getStationData">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="orgID" type="xsd:string" />
+              <xsd:element minOccurs="1" maxOccurs="1" name="organizationName" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="getStationRights">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:stationRightsSearchRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStationRightsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="rightsData" type="tns:rightsData" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="moreFlag" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="stationRightsSearchRequest">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationManufacturer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="serialNumber" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Proximity" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" default="M" name="proximityUnit" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Voltage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Current" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="demoSerialNumber" type="tns:serialNumberData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Reservable" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Level" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Mode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Pricing" type="tns:pricingOptions" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="provisionDateRange">
+            <xsd:complexType>
+              <xsd:all>
+                <xsd:element minOccurs="0" maxOccurs="1" name="startDate" type="xsd:date" />
+                <xsd:element minOccurs="0" maxOccurs="1" name="endDate" type="xsd:date" />
+              </xsd:all>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="currentFault" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portStatus" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="adminStatus" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="networkStatus" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="provisionStatus" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startRecord" type="xsd:long" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="rightsData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationRightsProfile" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="stationData" type="tns:stationDataRights" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="stationDataRights">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationSerialNum" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationMacAddr" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="userParams">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="user" type="tns:userData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="moreFlag" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getUsersSearchRequest">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="firstName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastModifiedTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connection" type="tns:connectionDataRequest" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="managementRealm" type="tns:managementRealmRequest" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="credentialID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startRecord" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="numUsers" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="userData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastModifiedTimestamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="firstName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connection" type="tns:connectionData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="managementRealm" type="tns:managementRealmData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="credentialIDs" type="tns:credentialIDsData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="recordNumber" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="connectionDataRequest">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="tns:connectedUserStatusTypes" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="customInfo" type="tns:customInfoData" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="connectionData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="tns:connectedUserStatusTypes" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="requestTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="customInfos" type="tns:customInfosData" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="managementRealmRequest">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="tns:managedUserStatusTypes" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="customInfo" type="tns:customInfoData" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="managementRealmData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Status" type="tns:managedUserStatusTypes" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="signupTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="customInfos" type="tns:customInfosData" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="customInfosData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="customInfo" type="tns:customInfoData" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="customInfoData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Key" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Value" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="credentialIDsData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="credentialID" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getStationRightsProfile">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sgID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="stationRightsProfile" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getStationRightsProfileResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="taskList">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element minOccurs="1" maxOccurs="1" name="Task" type="xsd:string" />
+                  <xsd:element minOccurs="1" maxOccurs="1" name="Description" type="xsd:string" />
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getCPNInstances">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getCPNInstancesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="CPN" type="tns:ocpninstances" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ocpninstances">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="cpnID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="cpnName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="cpnDescription" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="registerFeeds">
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Events" type="tns:dataEventName" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="searchQuery" type="tns:feedStationSearch" />
+            <xsd:element minOccurs="0" maxOccurs="1" default="all" name="feedType">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="all" />
+                  <xsd:enumeration value="public" />
+                  <xsd:enumeration value="restricted" />
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="dataEventName">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="unbounded" name="feedEventName" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="registerFeedsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="subscriptionID" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="feedStationSearch">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationModel" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Address" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="City" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="State" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="postalCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Level" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Reservable" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Geo" type="tns:geoData" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Proximity" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="proximityUnit" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Connector" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Voltage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Current" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Power" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="sgID" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="updateFeed">
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element minOccurs="1" maxOccurs="1" name="subscriptionID" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Refresh" type="xsd:boolean" />
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateFeedResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUserStatus">
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element minOccurs="1" maxOccurs="1" name="userID" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="associationType">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="CONNECTION" />
+                  <xsd:enumeration value="MANAGEMENT_REALM" />
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Status">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="APPROVED" />
+                  <xsd:enumeration value="REJECTED" />
+                  <xsd:enumeration value="REMOVED" />
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+            <xsd:element minOccurs="0" maxOccurs="1" name="customText" type="xsd:string" />
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUserStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setWaitlistDone">
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element minOccurs="1" maxOccurs="1" name="stationID" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="portID" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="userID" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="customMessageText" type="xsd:string" />
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setWaitlistDoneResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="responseCode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="responseText" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="getTransDataSearchRequest">
+        <xsd:all>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationMacAddr" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="orgID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="pricingRuleName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="transactionType" type="tns:transTypes" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="transactionID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="fromTransactionTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="toTransactionTimeStamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startRecord" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="numTransactions" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="transDataParams">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="transactionData" type="tns:transData" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="transData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="stationMacAddr" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="portNumber" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="organizationName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="pricingRuleName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="transactionType" type="tns:transTypes" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="transactionID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Energy" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="transactionTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="endTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Currency" type="tns:currencyCodeType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="grossAmount" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="flexBillingServiceFee" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="netRevenue" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="exchangeRateUSD" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="recordNumber" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="currencyCodeType">
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[A-Z]{3}" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="connectedUserStatusTypes">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="APPROVED" />
+          <xsd:enumeration value="NOT CONNECTED" />
+          <xsd:enumeration value="REJECTED" />
+          <xsd:enumeration value="PENDING" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="managedUserStatusTypes">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="APPROVED" />
+          <xsd:enumeration value="NOT MANAGED" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="transTypes">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Session" />
+          <xsd:enumeration value="Reservation" />
+          <xsd:enumeration value="Reservation Cancel" />
+          <xsd:enumeration value="Reservation Usage Addendum" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getPublicStationsRequest">
+    <wsdl:part name="parameters" element="tns:getPublicStations" />
+  </wsdl:message>
+  <wsdl:message name="getPublicStationsResponse">
+    <wsdl:part name="parameters" element="tns:getPublicStationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPublicStationStatusRequest">
+    <wsdl:part name="parameters" element="tns:getPublicStationStatus" />
+  </wsdl:message>
+  <wsdl:message name="getPublicStationStatusResponse">
+    <wsdl:part name="parameters" element="tns:getPublicStationStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="getStationStatus">
+    <wsdl:part name="parameters" element="tns:getStationStatus" />
+  </wsdl:message>
+  <wsdl:message name="getStationStatusResponse">
+    <wsdl:part name="parameters" element="tns:getStationStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAlarmsRequest">
+    <wsdl:part name="parameters" element="tns:getAlarms" />
+  </wsdl:message>
+  <wsdl:message name="getAlarmsResponse">
+    <wsdl:part name="parameters" element="tns:getAlarmsResponse" />
+  </wsdl:message>
+  <wsdl:message name="clearAlarmsRequest">
+    <wsdl:part name="parameters" element="tns:clearAlarms" />
+  </wsdl:message>
+  <wsdl:message name="clearAlarmsResponse">
+    <wsdl:part name="parameters" element="tns:clearAlarmsResponse" />
+  </wsdl:message>
+  <wsdl:message name="getOrgsAndStationGroupsRequest">
+    <wsdl:part name="parameters" element="tns:getOrgsAndStationGroups" />
+  </wsdl:message>
+  <wsdl:message name="getOrgsAndStationGroupsResponse">
+    <wsdl:part name="parameters" element="tns:getOrgsAndStationGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="shedLoadRequest">
+    <wsdl:part name="parameters" element="tns:shedLoad" />
+  </wsdl:message>
+  <wsdl:message name="shedLoadResponse">
+    <wsdl:part name="parameters" element="tns:shedLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="clearShedStateRequest">
+    <wsdl:part name="parameters" element="tns:clearShedState" />
+  </wsdl:message>
+  <wsdl:message name="clearShedStateResponse">
+    <wsdl:part name="parameters" element="tns:clearShedStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="getLoadRequest">
+    <wsdl:part name="parameters" element="tns:getLoad" />
+  </wsdl:message>
+  <wsdl:message name="getLoadResponse">
+    <wsdl:part name="parameters" element="tns:getLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="getStationGroupsRequest">
+    <wsdl:part name="parameters" element="tns:getStationGroups" />
+  </wsdl:message>
+  <wsdl:message name="getStationGroupsResponse">
+    <wsdl:part name="parameters" element="tns:getStationGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="getStationGroupDetailsRequest">
+    <wsdl:part name="parameters" element="tns:getStationGroupDetails" />
+  </wsdl:message>
+  <wsdl:message name="getStationGroupDetailsResponse">
+    <wsdl:part name="parameters" element="tns:getStationGroupDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCPNInstancesRequest">
+    <wsdl:part name="parameters" element="tns:getCPNInstances" />
+  </wsdl:message>
+  <wsdl:message name="getCPNInstancesResponse">
+    <wsdl:part name="parameters" element="tns:getCPNInstancesResponse" />
+  </wsdl:message>
+  <wsdl:message name="getChargingSessionDataRequest">
+    <wsdl:part name="parameters" element="tns:getChargingSessionData" />
+  </wsdl:message>
+  <wsdl:message name="getChargingSessionDataResponse">
+    <wsdl:part name="parameters" element="tns:getChargingSessionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="get15minChargingSessionDataRequest">
+    <wsdl:part name="parameters" element="tns:get15minChargingSessionData" />
+  </wsdl:message>
+  <wsdl:message name="get15minChargingSessionDataResponse">
+    <wsdl:part name="parameters" element="tns:get15minChargingSessionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getStationsRequest">
+    <wsdl:part name="parameters" element="tns:getStations" />
+  </wsdl:message>
+  <wsdl:message name="getStationsResponse">
+    <wsdl:part name="parameters" element="tns:getStationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="getStationRightsRequest">
+    <wsdl:part name="parameters" element="tns:getStationRights" />
+  </wsdl:message>
+  <wsdl:message name="getStationRightsResponse">
+    <wsdl:part name="parameters" element="tns:getStationRightsResponse" />
+  </wsdl:message>
+  <wsdl:message name="getStationRightsProfileRequest">
+    <wsdl:part name="parameters" element="tns:getStationRightsProfile" />
+  </wsdl:message>
+  <wsdl:message name="getStationRightsProfileResponse">
+    <wsdl:part name="parameters" element="tns:getStationRightsProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="registerFeedsRequest">
+    <wsdl:part name="parameters" element="tns:registerFeeds" />
+  </wsdl:message>
+  <wsdl:message name="registerFeedsResponse">
+    <wsdl:part name="parameters" element="tns:registerFeedsResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateFeedRequest">
+    <wsdl:part name="parameters" element="tns:updateFeed" />
+  </wsdl:message>
+  <wsdl:message name="updateFeedResponse">
+    <wsdl:part name="parameters" element="tns:updateFeedResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUsersRequest">
+    <wsdl:part name="parameters" element="tns:getUsers" />
+  </wsdl:message>
+  <wsdl:message name="getUsersResponse">
+    <wsdl:part name="parameters" element="tns:getUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateUserStatusRequest">
+    <wsdl:part name="parameters" element="tns:updateUserStatus" />
+  </wsdl:message>
+  <wsdl:message name="updateUserStatusResponse">
+    <wsdl:part name="parameters" element="tns:updateUserStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="setWaitlistDoneRequest">
+    <wsdl:part name="parameters" element="tns:setWaitlistDone" />
+  </wsdl:message>
+  <wsdl:message name="setWaitlistDoneResponse">
+    <wsdl:part name="parameters" element="tns:setWaitlistDoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTransactionDataRequest">
+    <wsdl:part name="parameters" element="tns:getTransactionData" />
+  </wsdl:message>
+  <wsdl:message name="getTransactionDataResponse">
+    <wsdl:part name="parameters" element="tns:getTransactionDataResponse" />
+  </wsdl:message>
+  <wsdl:portType name="chargepointservices">
+    <wsdl:operation name="getPublicStations">
+      <wsdl:input message="tns:getPublicStationsRequest" />
+      <wsdl:output message="tns:getPublicStationsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getPublicStationStatus">
+      <wsdl:input message="tns:getPublicStationStatusRequest" />
+      <wsdl:output message="tns:getPublicStationStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getStationStatus">
+      <wsdl:input message="tns:getStationStatus" />
+      <wsdl:output message="tns:getStationStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getAlarms">
+      <wsdl:input message="tns:getAlarmsRequest" />
+      <wsdl:output message="tns:getAlarmsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="clearAlarms">
+      <wsdl:input message="tns:clearAlarmsRequest" />
+      <wsdl:output message="tns:clearAlarmsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getOrgsAndStationGroups">
+      <wsdl:input message="tns:getOrgsAndStationGroupsRequest" />
+      <wsdl:output message="tns:getOrgsAndStationGroupsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="shedLoad">
+      <wsdl:input message="tns:shedLoadRequest" />
+      <wsdl:output message="tns:shedLoadResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="clearShedState">
+      <wsdl:input message="tns:clearShedStateRequest" />
+      <wsdl:output message="tns:clearShedStateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getLoad">
+      <wsdl:input message="tns:getLoadRequest" />
+      <wsdl:output message="tns:getLoadResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getStationGroups">
+      <wsdl:input message="tns:getStationGroupsRequest" />
+      <wsdl:output message="tns:getStationGroupsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getStationGroupDetails">
+      <wsdl:input message="tns:getStationGroupDetailsRequest" />
+      <wsdl:output message="tns:getStationGroupDetailsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCPNInstances">
+      <wsdl:input message="tns:getCPNInstancesRequest" />
+      <wsdl:output message="tns:getCPNInstancesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getChargingSessionData">
+      <wsdl:input message="tns:getChargingSessionDataRequest" />
+      <wsdl:output message="tns:getChargingSessionDataResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="get15minChargingSessionData">
+      <wsdl:input message="tns:get15minChargingSessionDataRequest" />
+      <wsdl:output message="tns:get15minChargingSessionDataResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getStations">
+      <wsdl:input message="tns:getStationsRequest" />
+      <wsdl:output message="tns:getStationsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getStationRights">
+      <wsdl:input message="tns:getStationRightsRequest" />
+      <wsdl:output message="tns:getStationRightsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getStationRightsProfile">
+      <wsdl:input message="tns:getStationRightsProfileRequest" />
+      <wsdl:output message="tns:getStationRightsProfileResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="registerFeeds">
+      <wsdl:input message="tns:registerFeedsRequest" />
+      <wsdl:output message="tns:registerFeedsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateFeed">
+      <wsdl:input message="tns:updateFeedRequest" />
+      <wsdl:output message="tns:updateFeedResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getUsers">
+      <wsdl:input message="tns:getUsersRequest" />
+      <wsdl:output message="tns:getUsersResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateUserStatus">
+      <wsdl:input message="tns:updateUserStatusRequest" />
+      <wsdl:output message="tns:updateUserStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setWaitlistDone">
+      <wsdl:input message="tns:setWaitlistDoneRequest" />
+      <wsdl:output message="tns:setWaitlistDoneResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getTransactionData">
+      <wsdl:input message="tns:getTransactionDataRequest" />
+      <wsdl:output message="tns:getTransactionDataResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="chargepointservicesSOAP" type="tns:chargepointservices">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getPublicStations">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getPublicStations" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPublicStationStatus">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getPublicStationStatus" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAlarms">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getAlarms" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="clearAlarms">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/clearAlarms" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrgsAndStationGroups">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getOrgsAndStationGroups" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="shedLoad">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/shedLoad" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="clearShedState">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/clearShedState" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLoad">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getLoad" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUsers">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getUsers" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStationGroups">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getStationGroups" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStationGroupDetails">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getStationGroupDetails" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCPNInstances">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getCPNInstances" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getChargingSessionData">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getChargingSessionData" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get15minChargingSessionData">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/get15minChargingSessionData" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStations">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getStations" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStationRights">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getStationRights" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStationRightsProfile">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getStationRightsProfile" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerFeeds">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/registerFeeds" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateFeed">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/updateFeed" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStationStatus">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getStationStatus" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUserStatus">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/updateUserStatus" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setWaitlistDone">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/setWaitlistDone" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTransactionData">
+      <soap:operation soapAction="urn:provider/interface/chargepointservices/getTransactionData" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="chargepointservices">
+    <wsdl:port name="ChargepointServicesSOAP" binding="tns:chargepointservicesSOAP">
+      <soap:address location="https://webservices.chargepoint.com/webservices/chargepoint/services/5.0" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

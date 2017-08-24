@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "ChargerID";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChargerID</title>
+    <style>
+      #map {        
+        height: 70vh;
+        width: 100%;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <img class="img-responsive center-block" src="images/chargerid.png" />
+        </div>
+    </div>
+    <div class="container">
+        <div id="map" class="img-responsive center-block"></div>
+    </div>
+    <br />
+    <div style="text-align:center">
+        <a href="~/blog/2017/08/04/introduction/">Learn about Project CID</a>
+    </div>
+    <div style="text-align:center">
+        <br />
+        <span><img src="~/images/ps_logo.png" height="42" width="42" />Copyright © 2017 Powerlink Systems All Rights Reserved.</span>
+    </div>
+</body>
+</html>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function initMap() {
+            var usCenterLatLng = new google.maps.LatLng(39.5, -96)
+            var mapOptions = {
+                zoom: 6,
+                center: usCenterLatLng,
+                backgroundColor: '#FFF',
+                disableDefaultUI: true,
+                styles: [
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [{"color": "#ffffff"},{ "visibility": "on" }]
+                    }, {
+                        "featureType": "landscape",
+                        "stylers": [{ "visibility": "on" }]
+                    }, {
+                        "featureType": "road",
+                        "stylers": [{ "visibility": "on" }]
+                    }, {
+                        "featureType": "administrative",
+                        "stylers": [{ "visibility": "off" }]
+                    }, {
+                        "featureType": "poi.government",
+                        "stylers": [{ "visibility": "on" }]
+                    }, {
+                        "featureType": "administrative",
+                        "stylers": [{ "visibility": "on" }]
+                    }, {
+                        "elementType": "labels",
+                        "stylers": [{ "visibility": "on" }]
+                    }, {
+                    }
+                ]
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            
+
+            // static data for demo
+            var heatmapData = [
+                new google.maps.LatLng(34.0522342, -118.2436849),
+                new google.maps.LatLng(37.7749295, -122.4194155),
+                new google.maps.LatLng(32.7157384, -117.1610838),
+                new google.maps.LatLng(45.5230622, -122.6764815),
+                new google.maps.LatLng(47.6062095, -122.3320708),
+                new google.maps.LatLng(33.7489954, -84.3879824),
+                new google.maps.LatLng(38.9071923, -77.0368707),
+                new google.maps.LatLng(42.3600825, -71.0588801)
+            ];
+
+            var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(25.82, -121.39), new google.maps.LatLng(49.38, -69.94));
+
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: heatmapData,
+                dissipating: true,
+                radius: 20,
+                map: map
+            });
+
+            var screenWidthToChangeZoom = 400;
+
+            //Resize Function
+            google.maps.event.addDomListener(window, "resize", function () {
+                var center = map.getCenter();
+                google.maps.event.trigger(map, "resize");
+                map.setCenter(center);
+                //map.fitBounds(bounds);
+                if (window.innerWidth < screenWidthToChangeZoom || document.documentElement.clientWidth < screenWidthToChangeZoom || document.body.clientWidth < screenWidthToChangeZoom) {
+                    map.setZoom(3);
+                } else {
+                    map.setZoom(4);
+                }
+            });
+
+            //map.fitBounds(bounds);
+            if (window.innerWidth < screenWidthToChangeZoom || document.documentElement.clientWidth < screenWidthToChangeZoom || document.body.clientWidth < screenWidthToChangeZoom) {
+                map.setZoom(3);
+            } else {
+                map.setZoom(4);
+            }
+
+            heatmap.setMap(map);
+            //map.setZoom(10);
+        }
+
+    </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq2EPwjdTAjyqFu90W-3hLTvN2AZnRSmA&libraries=visualization&callback=initMap">
+    </script>
+}

@@ -27,6 +27,8 @@ warning 6002: The table/view 'def.cid.app_config' does not have a primary key de
           <Property Name="latitude" Type="double" />
           <Property Name="longitude" Type="double" />
           <Property Name="description" Type="text" />
+          <Property Name="enabled" Type="bool" Nullable="false" />
+          <Property Name="charger_count" Type="int" />
         </EntityType>
         <EntityContainer Name="cidModelStoreContainer">
           <EntitySet Name="location" EntityType="Self.location" Schema="cid" store:Type="Tables" />
@@ -67,6 +69,8 @@ FROM `app_config` AS `app_config`</DefiningQuery>
           <Property Name="latitude" Type="Double" />
           <Property Name="longitude" Type="Double" />
           <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="charger_count" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -87,6 +91,8 @@ FROM `app_config` AS `app_config`</DefiningQuery>
           <EntitySetMapping Name="locations">
             <EntityTypeMapping TypeName="cidModel.location">
               <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="charger_count" ColumnName="charger_count" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="latitude" ColumnName="latitude" />

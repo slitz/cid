@@ -25,7 +25,8 @@ namespace ChargerID.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<app_config> app_config { get; set; }
         public virtual DbSet<location> locations { get; set; }
+        public virtual DbSet<metropolitan_area> metropolitan_area { get; set; }
+        public virtual DbSet<app_config> app_config { get; set; }
     }
 }

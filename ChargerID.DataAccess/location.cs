@@ -20,7 +20,9 @@ namespace ChargerID.DataAccess
         public Nullable<double> latitude { get; set; }
         public Nullable<double> longitude { get; set; }
         public string description { get; set; }
-        public bool enabled { get; set; }
         public Nullable<int> charger_count { get; set; }
+        public Nullable<int> metropolitan_area_id { get; set; }
+    
+        public virtual metropolitan_area metropolitan_area { get; set; }
     }
 }

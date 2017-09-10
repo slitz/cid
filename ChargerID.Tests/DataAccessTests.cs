@@ -9,10 +9,28 @@ namespace ChargerID.Tests
     public class DataAccessTests
     {
         [Test]
+        public void GetMetropolitanAreaByIdTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var record = dl.GetMetropolitanAreaById(1);
+            Assert.That(record, Is.InstanceOf<metropolitan_area>());
+            Assert.That(record.state, Is.EqualTo("PR"));
+        }
+
+        [Test]
+        public void GetAllMetropolitanAreasTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var record = dl.GetAllMetropolitanAreas();
+            Assert.That(record[0], Is.InstanceOf<metropolitan_area>());
+            Assert.That(record[0].state, Is.EqualTo("PR"));
+        }
+
+        [Test]
         public void GetLocationByPostalCodeTest()
         {
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
-            var record = dl.GetLocation("92653");
+            var record = dl.GetLocationByPostalCode("92653");
             Assert.That(record, Is.InstanceOf<location>());
             Assert.That(record.state, Is.EqualTo("CA"));
         }
@@ -24,6 +42,15 @@ namespace ChargerID.Tests
             var records = dl.GetLocationsByState("CA");
             Assert.That(records[0], Is.InstanceOf<location>());
             Assert.That(records[0].state, Is.EqualTo("CA"));
+        }
+
+        [Test]
+        public void GetLocationsByMetropolitanAreaIdTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var records = dl.GetLocationsByMetropolitanAreaId(1);
+            Assert.That(records[0], Is.InstanceOf<location>());
+            Assert.That(records[0].state, Is.EqualTo("PR"));
         }
 
         [Test]
@@ -44,7 +71,7 @@ namespace ChargerID.Tests
         }
 
         [Test]
-        public void GetAppConfig()
+        public void GetAppConfigTest()
         {
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
             var record = dl.GetAppConfig();

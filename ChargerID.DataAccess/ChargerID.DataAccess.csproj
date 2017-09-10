@@ -93,6 +93,9 @@
     <Compile Include="location.cs">
       <DependentUpon>ChargerIDModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="metropolitan_area.cs">
+      <DependentUpon>ChargerIDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

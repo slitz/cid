@@ -5,8 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="dd9f5353a2824431b85cacc681812f22" Name="Diagram1">
-        <EntityTypeShape EntityType="cidModel.app_config" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cidModel.location" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="cidModel.metropolitan_area" Width="1.5" PointX="0.75" PointY="3.25" />
+        <AssociationConnector Association="cidModel.location_ibfk_1" />
+        <EntityTypeShape EntityType="cidModel.app_config" Width="1.5" PointX="3.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

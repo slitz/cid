@@ -19,13 +19,87 @@ namespace ChargerID.DataAccess
         {
         }
 
-        public location GetLocation(string postalCode)
+        public metropolitan_area GetMetropolitanAreaById(Int32 id)
         {
+            metropolitan_area entity = new metropolitan_area();
+
             using (CIDEntities dbContext = new CIDEntities())
             {
-                location entity = dbContext.locations.FirstOrDefault(row => row.postal_code == postalCode);
-                return entity;
+                try
+                {
+                    entity = dbContext.metropolitan_area.FirstOrDefault(row => row.id == id);
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve metropolitan area by id: {0}", id);
+                }
             }
+
+            return entity;
+        }
+
+        public List<metropolitan_area> GetAllMetropolitanAreas()
+        {
+            var list = new List<metropolitan_area>();
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    var query = from m in dbContext.metropolitan_area                               
+                                select m;
+
+                    list = query.ToList();
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve metropolitan areas");
+                }
+            }
+
+            return list;
+        }
+
+        public location GetLocationByPostalCode(string postalCode)
+        {
+            location entity = new location();
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    entity = dbContext.locations.FirstOrDefault(row => row.postal_code == postalCode);
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve location by postal code: {0}", postalCode);
+                }
+            }
+
+            return entity;
+        }
+
+        public List<location> GetLocationsByMetropolitanAreaId(Int32 metroAreaId)
+        {
+            var list = new List<location>();
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    var query = from l in dbContext.locations
+                                where l.metropolitan_area_id == metroAreaId
+                                select l;
+
+                    list = query.ToList();
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve locations by metropolitan area id: {0}", metroAreaId);
+                }
+            }
+
+            return list;
         }
 
         public List<location> GetLocationsByState(string state)

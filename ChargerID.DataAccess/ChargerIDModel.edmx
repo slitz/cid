@@ -5,12 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="cidModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.cid.app_config' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="app_config">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="date" />
           </Key>
           <Property Name="id" Type="ubigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
@@ -27,37 +24,50 @@ warning 6002: The table/view 'def.cid.app_config' does not have a primary key de
           <Property Name="latitude" Type="double" />
           <Property Name="longitude" Type="double" />
           <Property Name="description" Type="text" />
-          <Property Name="enabled" Type="bool" Nullable="false" />
+          <Property Name="metropolitan_area_id" Type="int" />
           <Property Name="charger_count" Type="int" />
         </EntityType>
+        <EntityType Name="metropolitan_area">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="75" />
+          <Property Name="state" Type="text" />
+        </EntityType>
+        <Association Name="location_ibfk_1">
+          <End Role="metropolitan_area" Type="Self.metropolitan_area" Multiplicity="0..1" />
+          <End Role="location" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="metropolitan_area">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="metropolitan_area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="cidModelStoreContainer">
+          <EntitySet Name="app_config" EntityType="Self.app_config" Schema="cid" store:Type="Tables" />
           <EntitySet Name="location" EntityType="Self.location" Schema="cid" store:Type="Tables" />
-          <EntitySet Name="app_config" EntityType="Self.app_config" store:Type="Tables" store:Schema="cid">
-            <DefiningQuery>SELECT
-`app_config`.`id`, 
-`app_config`.`name`, 
-`app_config`.`value`, 
-`app_config`.`date`
-FROM `app_config` AS `app_config`</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="metropolitan_area" EntityType="Self.metropolitan_area" Schema="cid" store:Type="Tables" />
+          <AssociationSet Name="location_ibfk_1" Association="Self.location_ibfk_1">
+            <End Role="metropolitan_area" EntitySet="metropolitan_area" />
+            <End Role="location" EntitySet="location" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="cidModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="app_config">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="date" />
-          </Key>
-          <Property Name="id" Type="Decimal" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="value" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="CIDEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="app_config" EntityType="Self.app_config" />
           <EntitySet Name="locations" EntityType="cidModel.location" />
+          <EntitySet Name="metropolitan_area" EntityType="cidModel.metropolitan_area" />
+          <AssociationSet Name="location_ibfk_1" Association="cidModel.location_ibfk_1">
+            <End Role="metropolitan_area" EntitySet="metropolitan_area" />
+            <End Role="location" EntitySet="locations" />
+          </AssociationSet>
+          <EntitySet Name="app_config" EntityType="cidModel.app_config" />
         </EntityContainer>
         <EntityType Name="location">
           <Key>
@@ -69,8 +79,39 @@ FROM `app_config` AS `app_config`</DefiningQuery>
           <Property Name="latitude" Type="Double" />
           <Property Name="longitude" Type="Double" />
           <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="enabled" Type="Boolean" Nullable="false" />
           <Property Name="charger_count" Type="Int32" />
+          <Property Name="metropolitan_area_id" Type="Int32" />
+          <NavigationProperty Name="metropolitan_area" Relationship="cidModel.location_ibfk_1" FromRole="location" ToRole="metropolitan_area" />
+        </EntityType>
+        <EntityType Name="metropolitan_area">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="locations" Relationship="cidModel.location_ibfk_1" FromRole="metropolitan_area" ToRole="location" />
+        </EntityType>
+        <Association Name="location_ibfk_1">
+          <End Type="cidModel.metropolitan_area" Role="metropolitan_area" Multiplicity="0..1" />
+          <End Type="cidModel.location" Role="location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="metropolitan_area">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="metropolitan_area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="app_config">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -78,27 +119,36 @@ FROM `app_config` AS `app_config`</DefiningQuery>
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="cidModelStoreContainer" CdmEntityContainer="CIDEntities">
-          <EntitySetMapping Name="app_config">
-            <EntityTypeMapping TypeName="cidModel.app_config">
-              <MappingFragment StoreEntitySet="app_config">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="date" ColumnName="date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="locations">
             <EntityTypeMapping TypeName="cidModel.location">
               <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="metropolitan_area_id" ColumnName="metropolitan_area_id" />
                 <ScalarProperty Name="charger_count" ColumnName="charger_count" />
-                <ScalarProperty Name="enabled" ColumnName="enabled" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="latitude" ColumnName="latitude" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="metropolitan_area">
+            <EntityTypeMapping TypeName="cidModel.metropolitan_area">
+              <MappingFragment StoreEntitySet="metropolitan_area">
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="app_config">
+            <EntityTypeMapping TypeName="cidModel.app_config">
+              <MappingFragment StoreEntitySet="app_config">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

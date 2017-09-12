@@ -11,6 +11,7 @@ namespace ChargerID.DataAccess
 {
     public interface IDataAccess
     {
+        List<app_config> GetAppConfigs();
     }
 
     public class DataAccess : IDataAccess
@@ -147,7 +148,7 @@ namespace ChargerID.DataAccess
             return result;
         }
 
-        public List<app_config> GetAppConfig()
+        public List<app_config> GetAppConfigs()
         {
             var list = new List<app_config>();
 

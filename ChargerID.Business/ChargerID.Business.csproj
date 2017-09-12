@@ -11,6 +11,7 @@
     <AssemblyName>ChargerID.Business</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,8 +30,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Ads.Common">
+      <HintPath>..\packages\AdWordsClientLibrary.15.6.0\lib\net40\Google.Ads.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.AdWords">
+      <HintPath>..\packages\AdWordsClientLibrary.15.6.0\lib\net40\Google.AdWords.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -41,9 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PublicStations\ChargePoint\ChargePointClient.cs" />
+    <Compile Include="Partner\AdServices\Google\AdwordsAuthenticationHelper.cs" />
+    <Compile Include="Partner\AdServices\Google\AdwordsClient.cs" />
+    <Compile Include="Partner\LocatorServices\PublicStations\ChargePoint\ChargePointClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PublicStations\ChargePoint\ChargePointAuthenticationHelper.cs" />
+    <Compile Include="Partner\LocatorServices\PublicStations\ChargePoint\ChargePointAuthenticationHelper.cs" />
     <Compile Include="Service References\ChargePointServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -54,7 +65,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
     <None Include="Service References\ChargePointServiceReference\chargepointservices.wsdl" />
     <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.childGroupData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -193,6 +207,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChargerID.Configuration\ChargerID.Configuration.csproj">
+      <Project>{9c4966b5-72c9-4e89-bd04-0c7a9afdef96}</Project>
+      <Name>ChargerID.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChargerID.DataAccess\ChargerID.DataAccess.csproj">
       <Project>{2c99e885-9830-4f62-bf6f-b6b5c27aa4dd}</Project>
       <Name>ChargerID.DataAccess</Name>

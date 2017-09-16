@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChargerID.Tests</RootNamespace>
     <AssemblyName>ChargerID.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +41,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,10 +53,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdServices\Google\AdwordsCampaignControllerTests.cs" />
+    <Compile Include="Business\Partner\AdServices\Google\AdwordsClientTests.cs" />
     <Compile Include="DataAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChargerID.AdServices\ChargerID.AdServices.csproj">
+      <Project>{0ca9b1d4-6b42-451a-9c2c-9a8e85e36e0a}</Project>
+      <Name>ChargerID.AdServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChargerID.Business\ChargerID.Business.csproj">
+      <Project>{464d6da9-3aaa-4baa-8eed-fad370451cb0}</Project>
+      <Name>ChargerID.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChargerID.Configuration\ChargerID.Configuration.csproj">
+      <Project>{9c4966b5-72c9-4e89-bd04-0c7a9afdef96}</Project>
+      <Name>ChargerID.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChargerID.DataAccess\ChargerID.DataAccess.csproj">
       <Project>{2c99e885-9830-4f62-bf6f-b6b5c27aa4dd}</Project>
       <Name>ChargerID.DataAccess</Name>

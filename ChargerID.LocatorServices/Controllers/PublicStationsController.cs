@@ -11,24 +11,24 @@ namespace ChargerID.LocatorServices.Controllers
 {
     public class PublicStationsController : ApiController
     {
-        private readonly IPublicStations _publicStations;
+        //private readonly IPublicStations _publicStations;
 
-        public PublicStationsController()
-		{
-            _publicStations = new PublicStations();            
-		}
+        //public PublicStationsController()
+        //{
+        //    _publicStations = new PublicStations();            
+        //}
 
-        public HttpResponseMessage Get(string postalCode)
-        {
-            if (string.IsNullOrWhiteSpace(postalCode))
-                throw new MissingParametersException(new List<string>() { "Postal Code" });
+        //public HttpResponseMessage Get(string postalCode)
+        //{
+        //    if (string.IsNullOrWhiteSpace(postalCode))
+        //        throw new MissingParametersException(new List<string>() { "Postal Code" });
 
-            PublicStationsResponse response = new PublicStationsResponse()
-            {
-                Results = _publicStations.GetPublicStationsByPostalCode(postalCode)
-            };
+        //    PublicStationsResponse response = new PublicStationsResponse()
+        //    {
+        //        Results = _publicStations.GetPublicStationsByPostalCode(postalCode)
+        //    };
 
-            return Request.CreateResponse(HttpStatusCode.OK, response);
-        }
+        //    return Request.CreateResponse(HttpStatusCode.OK, response);
+        //}
     }
 }

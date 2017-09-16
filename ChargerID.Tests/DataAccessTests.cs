@@ -74,7 +74,7 @@ namespace ChargerID.Tests
         public void GetAppConfigTest()
         {
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
-            var record = dl.GetAppConfig();
+            var record = dl.GetAppConfigs();
             Assert.That(record[0], Is.InstanceOf<app_config>());
         }
     }

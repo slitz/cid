@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="AppConfiguration.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="ConfigAdwords.cs" />
     <Compile Include="ConfigDatabase.cs" />
     <Compile Include="ConfigurationDataProvider.cs" />
     <Compile Include="ConfigurationWrapper.cs" />

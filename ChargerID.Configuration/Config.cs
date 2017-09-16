@@ -9,12 +9,14 @@ namespace ChargerID.Configuration
     public interface IConfig
     {
         IConfigDatabase Database { get; }
+        IConfigAdwords Adwords { get; }
     }
 
     public class Config : IConfig
     {
         private readonly IConfigurationDataProvider _configurationDataProvider;
         private IConfigDatabase _configDatabase;
+        private IConfigAdwords _configAdwords;
 
         public Config()
         {
@@ -25,6 +27,7 @@ namespace ChargerID.Configuration
         private void Initialize()
         {
             _configDatabase = new ConfigDatabase(_configurationDataProvider);
+            _configAdwords = new ConfigAdwords(_configurationDataProvider);
         }
 
         public IConfigDatabase Database
@@ -32,6 +35,14 @@ namespace ChargerID.Configuration
             get
             {
                 return _configDatabase;
+            }
+        }
+
+        public IConfigAdwords Adwords
+        {
+            get
+            {
+                return _configAdwords;
             }
         }
     }

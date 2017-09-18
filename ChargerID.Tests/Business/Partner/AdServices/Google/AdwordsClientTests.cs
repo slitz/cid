@@ -16,11 +16,11 @@ namespace ChargerID.Tests
             client.GetCampaigns();
         }
 
-        [Test]
-        public void GetAdwordsCampaignGeoTargets()
-        {
-            AdwordsClient client = new AdwordsClient();
-            client.GetCampaignGeoTargets();
-        }
+        //[Test]
+        //public void GetAdwordsCampaignGeoTargets()
+        //{
+        //    AdwordsClient client = new AdwordsClient();
+        //    client.GetCampaignGeoTargets();
+        //}
     }
 }

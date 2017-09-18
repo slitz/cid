@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ChargerID.Configuration;
 using Google.Api.Ads.AdWords.Lib;
-using Google.Api.Ads.Common.Lib;
 using Google.Api.Ads.AdWords.v201708;
 using ChargerID.Business.Models;
+using System;
+using ChargerID.Business.Exceptions;
 
 namespace ChargerID.Business.Partner.AdServices.Google
 {
     public interface IAdwordsClient
     {
         List<AdwordsCampaign> GetCampaigns();
+        List<GeoTarget> GetCampaignGeoTargets(string campaignId);
     }
 
     public class AdwordsClient : IAdwordsClient
@@ -43,19 +41,29 @@ namespace ChargerID.Business.Partner.AdServices.Google
             selector.fields = new string[] { "Id", "Name", "Status" };
 
             CampaignPage campaigns = campaignService.get(selector);
-            List<AdwordsCampaign> list = PopulateCampaignList(campaigns);
 
-            return list;
+            if (campaigns != null)
+            {
+                List<AdwordsCampaign> list = PopulateCampaignList(campaigns);
+                return list;
+            }
+            else
+            {
+                throw new ValidationException("Unable to retrieve campaigns.");
+            }
         }
 
-        public void GetCampaignGeoTargets()
+        public List<GeoTarget> GetCampaignGeoTargets(string campaignId)
         {
             CampaignCriterionService campaignCriterionService = (CampaignCriterionService)_adwordsUser.GetService(AdWordsService.v201708.CampaignCriterionService);
 
             Selector selector = new Selector();
             selector.fields = new string[] { "CampaignId", "Id", "CriteriaType", "LocationName" };
 
-            var response = campaignCriterionService.get(selector);
+            CampaignCriterionPage targets = campaignCriterionService.get(selector);
+            List<GeoTarget> list = PopulateTargetList(targets, campaignId);
+
+            return list;
         }
 
         private void AssignAdwordsUserConfigs()
@@ -82,6 +90,77 @@ namespace ChargerID.Business.Partner.AdServices.Google
             }
 
             return list;
+        }
+
+        private List<GeoTarget> PopulateTargetList(CampaignCriterionPage targets, string campaignId)
+        {
+            var list = new List<GeoTarget>();
+            List<string> targetIds = ExtractTargetIds(targets, campaignId);
+            if (targetIds != null && targetIds.Count > 0)
+            {
+                List<KeyValuePair<string, string>> pairs = GetLocationNamesByTargetIds(targetIds);
+
+                foreach (KeyValuePair<string, string> pair in pairs)
+                {
+                    list.Add(new GeoTarget()
+                    {
+                        Id = pair.Key,
+                        Name = pair.Value
+                    });
+                }
+
+                return list;
+            }
+            else
+            {
+                throw new ValidationException("Campaign not found.");
+            }
+        }
+
+        private List<string> ExtractTargetIds(CampaignCriterionPage targets, string campaignId)
+        {
+            List<string> idList = new List<string>();
+            for (int i = 0; i < targets.totalNumEntries; i++)
+            {
+                if (targets.entries[i].campaignId == Convert.ToInt64(campaignId) && targets.entries[i].criterion.type == CriterionType.LOCATION)
+                {
+                    idList.Add(targets.entries[i].criterion.id.ToString());
+                }
+            }
+
+            return idList;
+        }
+
+        private List<KeyValuePair<string, string>> GetLocationNamesByTargetIds(List<string> ids)
+        {
+            // Adwords service that provides location names
+            LocationCriterionService locationCriterionService = (LocationCriterionService)_adwordsUser.GetService(AdWordsService.v201708.LocationCriterionService);
+            Selector selector = new Selector();
+            selector.fields = new string[] { "Id", "LocationName", "CanonicalName", "DisplayType", "ParentLocations", "Reach" };
+
+            // Predicates allow filtering of results
+            Predicate IdPredicate = new Predicate();
+            IdPredicate.field = "Id";
+            IdPredicate.@operator = PredicateOperator.EQUALS;
+            IdPredicate.values = ids.ToArray();
+            selector.predicates = new Predicate[] { IdPredicate };
+
+            LocationCriterion[] locationCriteria = locationCriterionService.get(selector);
+            
+            List<KeyValuePair<string, string>> pairs = new List<KeyValuePair<string, string>>();
+
+            foreach (string id in ids)
+            {
+                foreach (LocationCriterion location in locationCriteria)
+                {
+                    if (location.location.id == Convert.ToInt64(id))
+                    {
+                        pairs.Add(new KeyValuePair<string, string>(id, location.location.locationName));
+                    }
+                }
+            }
+        
+            return pairs;
         }
     }
 }

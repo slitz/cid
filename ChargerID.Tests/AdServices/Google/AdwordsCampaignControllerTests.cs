@@ -11,11 +11,11 @@ namespace ChargerID.Tests
     [Category("Integration Test")]
     public class AdwordsCampaignControllerTests
     {
-        [Test]
-        public void AdwordsCampaignControllerGet()
-        {
-            AdwordsCampaignController controller = new AdwordsCampaignController();
-            controller.GetAdwordsCampaigns();
-        }
+        //[Test]
+        //public void AdwordsCampaignControllerGet()
+        //{
+        //    AdwordsCampaignController controller = new AdwordsCampaignController();
+        //    controller.GetAdwordsCampaigns();
+        //}
     }
 }

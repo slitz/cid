@@ -17,7 +17,8 @@ namespace ChargerID.Business.Partner.AdServices.Google
     public class AdwordsClient : IAdwordsClient
     {
         private AdWordsUser _adwordsUser;
-        private AdWordsAppConfig _adwordsConfig;
+        private AdwordsUserHelper _adwordsUserHelper;
+        private readonly ILocationNameHelper _locationNameHelper;
 
         private readonly IConfig _config;
         protected IConfig Config
@@ -25,12 +26,12 @@ namespace ChargerID.Business.Partner.AdServices.Google
             get { return _config; }
         }
 
-        public AdwordsClient(IConfig config = null)
+        public AdwordsClient(IConfig config = null, AdwordsUserHelper adwordsUserHelper = null, ILocationNameHelper locationNameHelper = null)
         {
             _config = config ?? new Config();
-            _adwordsUser = new AdWordsUser();
-            _adwordsConfig = (AdWordsAppConfig)_adwordsUser.Config;
-            AssignAdwordsUserConfigs();
+            _adwordsUserHelper = adwordsUserHelper ?? new AdwordsUserHelper();
+            _adwordsUser = _adwordsUserHelper.SetupAdwordsUser();
+            _locationNameHelper = locationNameHelper ?? new LocationNameHelper(_adwordsUser);
         }
 
         public List<AdwordsCampaign> GetCampaigns()
@@ -66,16 +67,6 @@ namespace ChargerID.Business.Partner.AdServices.Google
             return list;
         }
 
-        private void AssignAdwordsUserConfigs()
-        {
-            _adwordsConfig.UserAgent = _config.Adwords.UserAgent;
-            _adwordsConfig.DeveloperToken = _config.Adwords.DeveloperToken;
-            _adwordsConfig.ClientCustomerId = _config.Adwords.ClientAccount;
-            _adwordsConfig.OAuth2ClientId = _config.Adwords.ClientId;
-            _adwordsConfig.OAuth2ClientSecret = _config.Adwords.ClientSecret;
-            _adwordsConfig.OAuth2RefreshToken = _config.Adwords.RefreshToken;
-        }
-
         private List<AdwordsCampaign> PopulateCampaignList(CampaignPage campaigns)
         {
             var list = new List<AdwordsCampaign>();
@@ -98,7 +89,7 @@ namespace ChargerID.Business.Partner.AdServices.Google
             List<string> targetIds = ExtractTargetIds(targets, campaignId);
             if (targetIds != null && targetIds.Count > 0)
             {
-                List<KeyValuePair<string, string>> pairs = GetLocationNamesByTargetIds(targetIds);
+                List<KeyValuePair<string, string>> pairs = _locationNameHelper.GetLocationNamesByTargetIds(targetIds);
 
                 foreach (KeyValuePair<string, string> pair in pairs)
                 {
@@ -129,38 +120,6 @@ namespace ChargerID.Business.Partner.AdServices.Google
             }
 
             return idList;
-        }
-
-        private List<KeyValuePair<string, string>> GetLocationNamesByTargetIds(List<string> ids)
-        {
-            // Adwords service that provides location names
-            LocationCriterionService locationCriterionService = (LocationCriterionService)_adwordsUser.GetService(AdWordsService.v201708.LocationCriterionService);
-            Selector selector = new Selector();
-            selector.fields = new string[] { "Id", "LocationName", "CanonicalName", "DisplayType", "ParentLocations", "Reach" };
-
-            // Predicates allow filtering of results
-            Predicate IdPredicate = new Predicate();
-            IdPredicate.field = "Id";
-            IdPredicate.@operator = PredicateOperator.EQUALS;
-            IdPredicate.values = ids.ToArray();
-            selector.predicates = new Predicate[] { IdPredicate };
-
-            LocationCriterion[] locationCriteria = locationCriterionService.get(selector);
-            
-            List<KeyValuePair<string, string>> pairs = new List<KeyValuePair<string, string>>();
-
-            foreach (string id in ids)
-            {
-                foreach (LocationCriterion location in locationCriteria)
-                {
-                    if (location.location.id == Convert.ToInt64(id))
-                    {
-                        pairs.Add(new KeyValuePair<string, string>(id, location.location.locationName));
-                    }
-                }
-            }
-        
-            return pairs;
         }
     }
 }

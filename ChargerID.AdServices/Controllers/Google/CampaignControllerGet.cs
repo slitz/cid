@@ -23,9 +23,9 @@ namespace ChargerID.AdServices.Controllers.Google
             {
                 campaigns = _adwordsClient.GetCampaigns();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new ValidationException(ex.Message);
             }
 
             return campaigns;

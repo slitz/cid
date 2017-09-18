@@ -80,6 +80,8 @@
     <Compile Include="Models\ResponseHelper.cs" />
     <Compile Include="Models\PublicApiHttpResponse.cs" />
     <Compile Include="Partner\AdServices\Google\AdwordsClient.cs" />
+    <Compile Include="Partner\AdServices\Google\AdwordsUserHelper.cs" />
+    <Compile Include="Partner\AdServices\Google\LocationNameHelper.cs" />
     <Compile Include="Partner\LocatorServices\PublicStations\ChargePoint\ChargePointClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Partner\LocatorServices\PublicStations\ChargePoint\ChargePointAuthenticationHelper.cs" />

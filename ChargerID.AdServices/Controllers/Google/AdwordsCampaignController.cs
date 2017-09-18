@@ -54,7 +54,7 @@ namespace ChargerID.AdServices.Controllers.Google
             }
             catch (Exception e)
             {
-                return ResponseHelper.CreateResponse(Request, HttpStatusCode.NotFound, e.Message + " " + e.InnerException, PublicApiCommonErrorCode.NOT_FOUND);
+                return ResponseHelper.CreateResponse(Request, HttpStatusCode.NotFound, e.Message + " " + e.InnerException + " " + e.StackTrace, PublicApiCommonErrorCode.NOT_FOUND);
             }
         }
     }

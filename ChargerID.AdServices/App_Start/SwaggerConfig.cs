@@ -2,6 +2,9 @@ using System.Web.Http;
 using WebActivatorEx;
 using ChargerID.AdServices;
 using Swashbuckle.Application;
+using System;
+using System.IO;
+using System.Reflection;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -101,7 +104,11 @@ namespace ChargerID.AdServices
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+                        var baseDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin");
+                        var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".XML";
+                        var commentsFile = Path.Combine(baseDirectory, commentsFileName);
+
+                        c.IncludeXmlComments(commentsFile);
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.

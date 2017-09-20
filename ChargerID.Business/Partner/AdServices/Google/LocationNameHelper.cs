@@ -59,11 +59,11 @@ namespace ChargerID.Business.Partner.AdServices.Google
             selector.fields = new string[] { "Id", "LocationName", "CanonicalName", "DisplayType", "ParentLocations", "Reach" };
 
             // Predicates allow filtering of results
-            Predicate IdPredicate = new Predicate();
-            IdPredicate.field = "Name";
-            IdPredicate.@operator = PredicateOperator.EQUALS;
-            IdPredicate.values = names.ToArray();
-            selector.predicates = new Predicate[] { IdPredicate };
+            Predicate NamePredicate = new Predicate();
+            NamePredicate.field = "LocationName";
+            NamePredicate.@operator = PredicateOperator.EQUALS;
+            NamePredicate.values = names.ToArray();
+            selector.predicates = new Predicate[] { NamePredicate };
 
             LocationCriterion[] locationCriteria = _locationCriterionService.get(selector);
 

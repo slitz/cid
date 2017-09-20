@@ -13,7 +13,7 @@ namespace ChargerID.Tests
     public class LocationNameHelperTests
     {
         [Test]
-        public void GetLocationNames()
+        public void GetLocationNamesByTargetIds()
         {
             AdwordsUserHelper adwordsUserHelper = new AdwordsUserHelper();
             AdWordsUser adwordsUser = adwordsUserHelper.SetupAdwordsUser();
@@ -21,13 +21,21 @@ namespace ChargerID.Tests
             List<string> idList = new List<string>();
             idList.Add("21137");
             var pairs = client.GetLocationNamesByTargetIds(idList);
+
+            Assert.That(pairs, Is.Not.Null);
         }
 
-        //[Test]
-        //public void GetAdwordsCampaignGeoTargets()
-        //{
-        //    AdwordsClient client = new AdwordsClient();
-        //    client.GetCampaignGeoTargets();
-        //}
+        [Test]
+        public void GetTargetIdsByLocationNames()
+        {
+            AdwordsUserHelper adwordsUserHelper = new AdwordsUserHelper();
+            AdWordsUser adwordsUser = adwordsUserHelper.SetupAdwordsUser();
+            LocationNameHelper client = new LocationNameHelper(adwordsUser);
+            List<string> nameList = new List<string>();
+            nameList.Add("Mexico");
+            var pairs = client.GetTargetIdsByLocationNames(nameList);
+
+            Assert.That(pairs, Is.Not.Null);
+        }
     }
 }

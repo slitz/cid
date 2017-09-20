@@ -26,6 +26,8 @@ namespace ChargerID.Business.Partner.AdServices.Google
             get { return _config; }
         }
 
+        #region constructor
+
         public AdwordsClient(IConfig config = null, AdwordsUserHelper adwordsUserHelper = null, ILocationNameHelper locationNameHelper = null)
         {
             _config = config ?? new Config();
@@ -33,6 +35,10 @@ namespace ChargerID.Business.Partner.AdServices.Google
             _adwordsUser = _adwordsUserHelper.SetupAdwordsUser();
             _locationNameHelper = locationNameHelper ?? new LocationNameHelper(_adwordsUser);
         }
+
+        #endregion
+
+        #region public methods
 
         public List<AdwordsCampaign> GetCampaigns()
         {
@@ -66,6 +72,46 @@ namespace ChargerID.Business.Partner.AdServices.Google
 
             return list;
         }
+
+        public bool AddCampaignGeoTargets(string campaignId, List<string> locationNames)
+        {
+            bool isSuccess = true;
+
+            CampaignCriterionService campaignCriterionService = (CampaignCriterionService)_adwordsUser.GetService(AdWordsService.v201708.CampaignCriterionService);
+
+            List<KeyValuePair<string, string>> pairs = _locationNameHelper.GetTargetIdsByLocationNames(locationNames);
+
+            List<CampaignCriterionOperation> operations = new List<CampaignCriterionOperation>();
+            foreach (KeyValuePair<string, string> pair in pairs)
+            {
+                Location location = new Location() { id = Convert.ToInt64(pair.Value) };
+                CampaignCriterionOperation operation = new CampaignCriterionOperation();
+                CampaignCriterion campaignCriterion = new CampaignCriterion();
+                campaignCriterion.campaignId = Convert.ToInt64(campaignId);
+                campaignCriterion.criterion = location;
+                campaignCriterion.CampaignCriterionType = "Location";
+                operation.operand = campaignCriterion;
+                operation.OperationType = "ADD";
+                operation.@operator = Operator.ADD;
+                operations.Add(operation);
+            }
+
+            try
+            {
+                CampaignCriterionReturnValue result = campaignCriterionService.mutate(operations.ToArray());
+            }
+            catch (Exception ex)
+            {
+                var exception = ex.Message;
+                isSuccess = false;
+            }
+
+            return isSuccess;
+        }
+
+        #endregion
+
+        #region private methods
 
         private List<AdwordsCampaign> PopulateCampaignList(CampaignPage campaigns)
         {
@@ -121,5 +167,7 @@ namespace ChargerID.Business.Partner.AdServices.Google
 
             return idList;
         }
+
+        #endregion
     }
 }

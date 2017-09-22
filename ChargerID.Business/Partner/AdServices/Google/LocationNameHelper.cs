@@ -10,8 +10,8 @@ namespace ChargerID.Business.Partner.AdServices.Google
 {
     public interface ILocationNameHelper
     {
-        List<KeyValuePair<string, string>> GetLocationNamesByTargetIds(List<string> ids);
-        List<KeyValuePair<string, string>> GetTargetIdsByLocationNames(List<string> names);
+        List<GeoTarget> GetLocationNamesByTargetIds(List<string> ids);
+        List<GeoTarget> GetTargetIdsByLocationNames(List<KeyValuePair<string, string>> locationNames);
     }
 
     public class LocationNameHelper : ILocationNameHelper
@@ -23,7 +23,7 @@ namespace ChargerID.Business.Partner.AdServices.Google
             _locationCriterionService = (LocationCriterionService)adwordsUser.GetService(AdWordsService.v201708.LocationCriterionService);
         }
 
-        public List<KeyValuePair<string, string>> GetLocationNamesByTargetIds(List<string> ids)
+        public List<GeoTarget> GetLocationNamesByTargetIds(List<string> ids)
         {
             Selector selector = new Selector();
             selector.fields = new string[] { "Id", "LocationName", "CanonicalName", "DisplayType", "ParentLocations", "Reach" };
@@ -37,50 +37,73 @@ namespace ChargerID.Business.Partner.AdServices.Google
 
             LocationCriterion[] locationCriteria = _locationCriterionService.get(selector);
 
-            List<KeyValuePair<string, string>> pairs = new List<KeyValuePair<string, string>>();
+            List<GeoTarget> targets = new List<GeoTarget>();
 
             foreach (string id in ids)
             {
-                foreach (LocationCriterion location in locationCriteria)
+                foreach (LocationCriterion target in locationCriteria)
                 {
-                    if (location.location.id == Convert.ToInt64(id))
+                    if (target.location.id == Convert.ToInt64(id))
                     {
-                        pairs.Add(new KeyValuePair<string, string>(id, location.location.locationName));
+                        targets.Add(new GeoTarget()
+                        {
+                            Id = id,
+                            City = target.location.locationName,
+                            State = target.location.parentLocations[0].locationName
+                        });
                     }
                 }
             }
 
-            return pairs;
+            return targets;
         }
 
-        public List<KeyValuePair<string, string>> GetTargetIdsByLocationNames(List<string> names)
+        public List<GeoTarget> GetTargetIdsByLocationNames(List<KeyValuePair<string, string>> locationNames)
         {
             Selector selector = new Selector();
             selector.fields = new string[] { "Id", "LocationName", "CanonicalName", "DisplayType", "ParentLocations", "Reach" };
+
+            // extract city names from key value pair to use in predicate object
+            List<string> cities = new List<string>();
+            foreach (KeyValuePair<string, string> location in locationNames)
+            {
+                cities.Add(location.Key);
+            }
 
             // Predicates allow filtering of results
             Predicate NamePredicate = new Predicate();
             NamePredicate.field = "LocationName";
             NamePredicate.@operator = PredicateOperator.EQUALS;
-            NamePredicate.values = names.ToArray();
+            NamePredicate.values = cities.ToArray();
             selector.predicates = new Predicate[] { NamePredicate };
 
             LocationCriterion[] locationCriteria = _locationCriterionService.get(selector);
 
-            List<KeyValuePair<string, string>> pairs = new List<KeyValuePair<string, string>>();
+            List<GeoTarget> targets = new List<GeoTarget>();
 
-            foreach (string name in names)
+            foreach (KeyValuePair<string, string> name in locationNames)
             {
-                foreach (LocationCriterion location in locationCriteria)
+                foreach (LocationCriterion target in locationCriteria)
                 {
-                    if (location.location.locationName == name)
+                    if (target.location.locationName == name.Key && target.location.displayType == "City")
                     {
-                        pairs.Add(new KeyValuePair<string, string>(name, location.location.id.ToString()));
+                        for (int i = 0; i < target.location.parentLocations.Length; i++)
+                        {
+                            if (target.location.parentLocations[i].displayType == "State" && target.location.parentLocations[i].locationName == name.Value)
+                            {
+                                targets.Add(new GeoTarget()
+                                {
+                                    Id = target.location.id.ToString(),
+                                    City = name.Key,
+                                    State = target.location.parentLocations[i].locationName
+                                });
+                            }
+                        }
                     }
                 }
             }
 
-            return pairs;
+            return targets;
         }
     }
 }

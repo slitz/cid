@@ -57,5 +57,27 @@ namespace ChargerID.AdServices.Controllers.Google
                 return ResponseHelper.CreateResponse(Request, HttpStatusCode.NotFound, e.Message + " " + e.InnerException + " " + e.StackTrace, PublicApiCommonErrorCode.NOT_FOUND);
             }
         }
+
+        /// <summary>
+        /// Updates the location targets for the specified campaign
+        /// </summary>
+        /// <param name="campaignId">Campaign Id from the default client account</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("v1/adwords/campaigns/{campaignId}/targets")]
+        [SwaggerResponse(HttpStatusCode.OK, "Success", typeof(PublicApiHttpResponseWithData<UpdateGeoTargetsResponse>))]
+        public HttpResponseMessage UpdateGeoTargets(string campaignId, UpdateGeoTargetsRequest updateGeoTargetsRequest)
+        {
+            try
+            {
+                CampaignControllerPut put = new CampaignControllerPut();
+                UpdateGeoTargetsResponse updatedTargets = put.UpdateCampaignGeoTargets(campaignId, updateGeoTargetsRequest);
+                return ResponseHelper.CreateResponse(Request, HttpStatusCode.OK, updatedTargets, PublicApiCommonErrorCode.SUCCESS);
+            }
+            catch (Exception e)
+            {
+                return ResponseHelper.CreateResponse(Request, HttpStatusCode.NotFound, e.Message + " " + e.InnerException + " " + e.StackTrace, PublicApiCommonErrorCode.NOT_FOUND);
+            }
+        }
     }
 }

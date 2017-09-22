@@ -120,6 +120,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Google\CampaignControllerGet.cs" />
     <Compile Include="Controllers\Google\AdwordsCampaignController.cs" />
+    <Compile Include="Controllers\Google\CampaignControllerPut.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

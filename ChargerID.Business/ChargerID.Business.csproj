@@ -76,6 +76,8 @@
   <ItemGroup>
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Models\AdServices\AdwordsCampaign.cs" />
+    <Compile Include="Models\AdServices\UpdateGeoTargetsResponse.cs" />
+    <Compile Include="Models\AdServices\UpdateGeoTargetsRequest.cs" />
     <Compile Include="Models\AdServices\GeoTarget.cs" />
     <Compile Include="Models\ResponseHelper.cs" />
     <Compile Include="Models\PublicApiHttpResponse.cs" />

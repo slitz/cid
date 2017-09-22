@@ -12,6 +12,7 @@ namespace ChargerID.Business.Partner.AdServices.Google
     {
         List<AdwordsCampaign> GetCampaigns();
         List<GeoTarget> GetCampaignGeoTargets(string campaignId);
+        UpdateGeoTargetsResponse UpdateCampaignGeoTargets(string campaignId, UpdateGeoTargetsRequest updateGeoTargetsRequest);
     }
 
     public class AdwordsClient : IAdwordsClient
@@ -73,26 +74,33 @@ namespace ChargerID.Business.Partner.AdServices.Google
             return list;
         }
 
-        public bool AddCampaignGeoTargets(string campaignId, List<string> locationNames)
+        public UpdateGeoTargetsResponse UpdateCampaignGeoTargets(string campaignId, UpdateGeoTargetsRequest updateGeoTargetsRequest)
         {
-            bool isSuccess = true;
+            UpdateGeoTargetsResponse updateResponse = new UpdateGeoTargetsResponse() { Success = true };
+            
+            Operator action = Operator.ADD;
+            if (updateGeoTargetsRequest.UpdateMode == UpdateMode.Remove)
+            {
+                action = Operator.REMOVE;
+            }
+
+            List<KeyValuePair<string, string>> pairs = ExtractCityStatePairsFromRequets(updateGeoTargetsRequest);
 
             CampaignCriterionService campaignCriterionService = (CampaignCriterionService)_adwordsUser.GetService(AdWordsService.v201708.CampaignCriterionService);
 
-            List<KeyValuePair<string, string>> pairs = _locationNameHelper.GetTargetIdsByLocationNames(locationNames);
+            List<GeoTarget> targets = _locationNameHelper.GetTargetIdsByLocationNames(pairs);
 
             List<CampaignCriterionOperation> operations = new List<CampaignCriterionOperation>();
-            foreach (KeyValuePair<string, string> pair in pairs)
+            foreach (GeoTarget target in targets)
             {
-                Location location = new Location() { id = Convert.ToInt64(pair.Value) };
+                Location location = new Location() { id = Convert.ToInt64(target.Id) };
                 CampaignCriterionOperation operation = new CampaignCriterionOperation();
                 CampaignCriterion campaignCriterion = new CampaignCriterion();
                 campaignCriterion.campaignId = Convert.ToInt64(campaignId);
                 campaignCriterion.criterion = location;
                 campaignCriterion.CampaignCriterionType = "Location";
                 operation.operand = campaignCriterion;
-                operation.OperationType = "ADD";
-                operation.@operator = Operator.ADD;
+                operation.@operator = action;
                 operations.Add(operation);
             }
 
@@ -103,10 +111,10 @@ namespace ChargerID.Business.Partner.AdServices.Google
             catch (Exception ex)
             {
                 var exception = ex.Message;
-                isSuccess = false;
+                updateResponse.Success = false;
             }
 
-            return isSuccess;
+            return updateResponse;
         }
 
         #endregion
@@ -135,16 +143,7 @@ namespace ChargerID.Business.Partner.AdServices.Google
             List<string> targetIds = ExtractTargetIds(targets, campaignId);
             if (targetIds != null && targetIds.Count > 0)
             {
-                List<KeyValuePair<string, string>> pairs = _locationNameHelper.GetLocationNamesByTargetIds(targetIds);
-
-                foreach (KeyValuePair<string, string> pair in pairs)
-                {
-                    list.Add(new GeoTarget()
-                    {
-                        Id = pair.Key,
-                        Name = pair.Value
-                    });
-                }
+                list = _locationNameHelper.GetLocationNamesByTargetIds(targetIds);
 
                 return list;
             }
@@ -166,6 +165,17 @@ namespace ChargerID.Business.Partner.AdServices.Google
             }
 
             return idList;
+        }
+
+        private List<KeyValuePair<string, string>> ExtractCityStatePairsFromRequets(UpdateGeoTargetsRequest updateGeoTargetsRequest)
+        {
+            List<KeyValuePair<string, string>> pairs = new List<KeyValuePair<string, string>>();
+            foreach(GeoLocation pair in updateGeoTargetsRequest.GeoLocation)
+            {
+                pairs.Add(new KeyValuePair<string,string>(pair.City, pair.State));
+            }
+
+            return pairs;
         }
 
         #endregion

@@ -17,12 +17,22 @@ namespace ChargerID.Tests
             client.GetCampaigns();
         }
 
-        [Test]
-        public void AddCampaignGeoTargets()
-        {
-            AdwordsClient client = new AdwordsClient();
-            List<string> list = new List<string>() { "Dallas" };
-            client.AddCampaignGeoTargets("927060915", list);
-        }
+        //[Test]
+        //public void AddCampaignGeoTargets()
+        //{
+        //    AdwordsClient client = new AdwordsClient();
+        //    List<KeyValuePair<string,string>> list = new List<KeyValuePair<string,string>>();
+        //    list.Add(new KeyValuePair<string, string>("Dallas", "Texas"));
+        //    client.UpdateCampaignGeoTargets("927060915", list, Google.Api.Ads.AdWords.v201708.Operator.ADD);
+        //}
+
+        //[Test]
+        //public void RemoveCampaignGeoTargets()
+        //{
+        //    AdwordsClient client = new AdwordsClient();
+        //    List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+        //    list.Add(new KeyValuePair<string, string>("Dallas", "Texas"));
+        //    client.UpdateCampaignGeoTargets("927060915", list, Google.Api.Ads.AdWords.v201708.Operator.REMOVE);
+        //}
     }
 }

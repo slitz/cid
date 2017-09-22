@@ -31,9 +31,9 @@ namespace ChargerID.Tests
             AdwordsUserHelper adwordsUserHelper = new AdwordsUserHelper();
             AdWordsUser adwordsUser = adwordsUserHelper.SetupAdwordsUser();
             LocationNameHelper client = new LocationNameHelper(adwordsUser);
-            List<string> nameList = new List<string>();
-            nameList.Add("Mexico");
-            var pairs = client.GetTargetIdsByLocationNames(nameList);
+            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+            list.Add(new KeyValuePair<string, string>("Dallas", "TX"));
+            var pairs = client.GetTargetIdsByLocationNames(list);
 
             Assert.That(pairs, Is.Not.Null);
         }

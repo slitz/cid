@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ChargerID.Configuration
 {
     public interface IConfig
     {
         IConfigDatabase Database { get; }
         IConfigAdwords Adwords { get; }
+        IConfigNrel Nrel { get; }
     }
 
     public class Config : IConfig
@@ -17,6 +13,7 @@ namespace ChargerID.Configuration
         private readonly IConfigurationDataProvider _configurationDataProvider;
         private IConfigDatabase _configDatabase;
         private IConfigAdwords _configAdwords;
+        private IConfigNrel _configNrel;
 
         public Config()
         {
@@ -28,6 +25,7 @@ namespace ChargerID.Configuration
         {
             _configDatabase = new ConfigDatabase(_configurationDataProvider);
             _configAdwords = new ConfigAdwords(_configurationDataProvider);
+            _configNrel = new ConfigNrel(_configurationDataProvider);
         }
 
         public IConfigDatabase Database
@@ -43,6 +41,14 @@ namespace ChargerID.Configuration
             get
             {
                 return _configAdwords;
+            }
+        }
+
+        public IConfigNrel Nrel
+        {
+            get
+            {
+                return _configNrel;
             }
         }
     }

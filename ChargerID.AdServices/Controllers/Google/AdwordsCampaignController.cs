@@ -62,6 +62,7 @@ namespace ChargerID.AdServices.Controllers.Google
         /// Updates the location targets for the specified campaign
         /// </summary>
         /// <param name="campaignId">Campaign Id from the default client account</param>
+        /// <param name="updateGeoTargetsRequest">An object consisting of an UpdateMode value (0 = add, 1 = remove) and an array of GeoLocations each consisting of a city and state value (note: full name of state is required).</param>
         /// <returns></returns>
         [HttpPost]
         [Route("v1/adwords/campaigns/{campaignId}/targets")]

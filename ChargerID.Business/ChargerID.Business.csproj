@@ -79,22 +79,15 @@
     <Compile Include="Models\AdServices\UpdateGeoTargetsResponse.cs" />
     <Compile Include="Models\AdServices\UpdateGeoTargetsRequest.cs" />
     <Compile Include="Models\AdServices\GeoTarget.cs" />
+    <Compile Include="Models\LocatorServices\StationCounts.cs" />
     <Compile Include="Models\ResponseHelper.cs" />
     <Compile Include="Models\PublicApiHttpResponse.cs" />
+    <Compile Include="Models\GeoLocation.cs" />
     <Compile Include="Partner\AdServices\Google\AdwordsClient.cs" />
     <Compile Include="Partner\AdServices\Google\AdwordsUserHelper.cs" />
     <Compile Include="Partner\AdServices\Google\LocationNameHelper.cs" />
-    <Compile Include="Partner\LocatorServices\PublicStations\ChargePoint\ChargePointClient.cs" />
+    <Compile Include="Partner\LocatorServices\ChargingStations\NrelClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Partner\LocatorServices\PublicStations\ChargePoint\ChargePointAuthenticationHelper.cs" />
-    <Compile Include="Service References\ChargePointServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -102,142 +95,6 @@
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\chargepointservices.wsdl" />
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.childGroupData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.clearAlarmsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.clearShedStateResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.get15minChargingSessionDataResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getAlarmsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getChargingSessionDataResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getCPNInstancesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getLoadResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getOrgsAndStationGroupsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getPublicStationsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getPublicStationStatusResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getStationGroupDetailsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getStationGroupsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getStationRightsProfileResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getStationRightsProfileResponseTaskList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getStationRightsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getStationsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getStationStatusResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getTransactionDataResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.getUsersResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.groupsdata.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.oalarms.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.oChargingSessionsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.ocpninstances.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.ohostdata.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.oStatusdata.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.registerFeedsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.rightsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.sessionSearchResultdata.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.setWaitlistDoneResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.shedLoadResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.shedLoadResponsePort.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.stationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.stationDataExtended.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.stationGroupData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.stationloaddata.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.transData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.updateFeedResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.updateUserStatusResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ChargePointServiceReference\ChargerID.Business.ChargePointServiceReference.userParams.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ChargePointServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChargePointServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChargePointServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChargePointServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

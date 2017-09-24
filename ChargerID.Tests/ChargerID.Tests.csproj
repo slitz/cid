@@ -74,6 +74,7 @@
     <Compile Include="AdServices\Google\AdwordsCampaignControllerTests.cs" />
     <Compile Include="Business\Partner\AdServices\Google\AdwordsClientTests.cs" />
     <Compile Include="Business\Partner\AdServices\Google\LocationNameHelperTests.cs" />
+    <Compile Include="Business\Partner\LocatorServices\Nrel\NrelClientTests.cs" />
     <Compile Include="DataAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

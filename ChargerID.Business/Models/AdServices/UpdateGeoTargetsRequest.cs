@@ -22,10 +22,4 @@ namespace ChargerID.Business.Models
         Add = 0,
         Remove = 1
     }
-
-    public class GeoLocation
-    {
-        public string City { get; set; }
-        public string State { get; set; }
-    }
 }

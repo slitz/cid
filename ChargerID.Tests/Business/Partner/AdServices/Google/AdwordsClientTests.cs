@@ -17,6 +17,13 @@ namespace ChargerID.Tests
             client.GetCampaigns();
         }
 
+        [Test]
+        public void GetCampaignGeoTargets()
+        {
+            AdwordsClient client = new AdwordsClient();
+            client.GetCampaignGeoTargets("931755099");
+        }
+
         //[Test]
         //public void AddCampaignGeoTargets()
         //{

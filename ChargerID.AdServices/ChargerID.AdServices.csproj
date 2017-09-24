@@ -138,10 +138,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ChargerID.Business\ChargerID.Business.csproj">
       <Project>{464d6da9-3aaa-4baa-8eed-fad370451cb0}</Project>

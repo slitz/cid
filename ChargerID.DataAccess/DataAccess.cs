@@ -126,28 +126,6 @@ namespace ChargerID.DataAccess
             return list;
         }
 
-        public bool UpdateLocationChargerCount(string postalCode, Int32 chargerCount)
-        {
-            bool result = true;
-
-            using (CIDEntities dbContext = new CIDEntities())
-            {
-                try
-                {
-                    location entity = dbContext.locations.Single(row => row.postal_code == postalCode);
-                    entity.charger_count = chargerCount;
-                    dbContext.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    result = false;
-                    string.Format("failed to update charger_count for: {0}", postalCode);
-                }    
-            }
-
-            return result;
-        }
-
         public List<app_config> GetAppConfigs()
         {
             var list = new List<app_config>();
@@ -174,6 +152,37 @@ namespace ChargerID.DataAccess
                 app_config entity = dbContext.app_config.FirstOrDefault(row => row.id == id);
                 return entity;
             }
+        }
+
+        public long addChargingStationData(string postalCode, int chargingStationCount, int portCount)
+        {
+            long result = 0;
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    charging_station_data entity = new charging_station_data()
+                    {
+                        postal_code = postalCode,
+                        station_count = chargingStationCount,
+                        port_count = portCount,
+                        date = DateTime.Now
+                    };
+
+                    dbContext.charging_station_data.Add(entity);
+
+                    if (dbContext.SaveChanges() > 0)
+                        result = entity.id;
+                }
+                catch (Exception ex)
+                {
+                    result = 0;
+                    string.Format("Unable to add charging station data: {0}.", ex);
+                }
+            }
+
+            return result;
         }
     }
 }

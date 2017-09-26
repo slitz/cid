@@ -54,14 +54,6 @@ namespace ChargerID.Tests
         }
 
         [Test]
-        public void UpdateLocationChargerCountTest()
-        {
-            DataAccess.DataAccess dl = new DataAccess.DataAccess();
-            var result = dl.UpdateLocationChargerCount("92653", 2);
-            Assert.That(result, Is.True);
-        }
-
-        [Test]
         public void GetAppConfigByIdTest()
         {
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
@@ -76,6 +68,14 @@ namespace ChargerID.Tests
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
             var record = dl.GetAppConfigs();
             Assert.That(record[0], Is.InstanceOf<app_config>());
+        }
+
+        [Test]
+        public void AddChargingStationDataTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var result = dl.addChargingStationData("85254", 3, 5);
+            Assert.That(result, Is.GreaterThan(0));
         }
     }
 }

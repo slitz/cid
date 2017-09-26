@@ -14,6 +14,16 @@
           <Property Name="value" Type="text" />
           <Property Name="date" Type="timestamp" Precision="0" Nullable="false" />
         </EntityType>
+        <EntityType Name="charging_station_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postal_code" Type="varchar" MaxLength="5" />
+          <Property Name="station_count" Type="int" />
+          <Property Name="port_count" Type="int" />
+          <Property Name="date" Type="timestamp" Precision="0" />
+        </EntityType>
         <EntityType Name="location">
           <Key>
             <PropertyRef Name="postal_code" />
@@ -25,16 +35,27 @@
           <Property Name="longitude" Type="double" />
           <Property Name="description" Type="text" />
           <Property Name="metropolitan_area_id" Type="int" />
-          <Property Name="charger_count" Type="int" />
         </EntityType>
         <EntityType Name="metropolitan_area">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="75" />
           <Property Name="state" Type="text" />
         </EntityType>
+        <Association Name="charging_station_data_ibfk_1">
+          <End Role="location" Type="Self.location" Multiplicity="0..1" />
+          <End Role="charging_station_data" Type="Self.charging_station_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="postal_code" />
+            </Principal>
+            <Dependent Role="charging_station_data">
+              <PropertyRef Name="postal_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="location_ibfk_1">
           <End Role="metropolitan_area" Type="Self.metropolitan_area" Multiplicity="0..1" />
           <End Role="location" Type="Self.location" Multiplicity="*" />
@@ -49,8 +70,13 @@
         </Association>
         <EntityContainer Name="cidModelStoreContainer">
           <EntitySet Name="app_config" EntityType="Self.app_config" Schema="cid" store:Type="Tables" />
+          <EntitySet Name="charging_station_data" EntityType="Self.charging_station_data" Schema="cid" store:Type="Tables" />
           <EntitySet Name="location" EntityType="Self.location" Schema="cid" store:Type="Tables" />
           <EntitySet Name="metropolitan_area" EntityType="Self.metropolitan_area" Schema="cid" store:Type="Tables" />
+          <AssociationSet Name="charging_station_data_ibfk_1" Association="Self.charging_station_data_ibfk_1">
+            <End Role="location" EntitySet="location" />
+            <End Role="charging_station_data" EntitySet="charging_station_data" />
+          </AssociationSet>
           <AssociationSet Name="location_ibfk_1" Association="Self.location_ibfk_1">
             <End Role="metropolitan_area" EntitySet="metropolitan_area" />
             <End Role="location" EntitySet="location" />
@@ -68,6 +94,11 @@
             <End Role="location" EntitySet="locations" />
           </AssociationSet>
           <EntitySet Name="app_config" EntityType="cidModel.app_config" />
+          <EntitySet Name="charging_station_data" EntityType="cidModel.charging_station_data" />
+          <AssociationSet Name="charging_station_data_ibfk_1" Association="cidModel.charging_station_data_ibfk_1">
+            <End Role="location" EntitySet="locations" />
+            <End Role="charging_station_data" EntitySet="charging_station_data" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="location">
           <Key>
@@ -79,9 +110,9 @@
           <Property Name="latitude" Type="Double" />
           <Property Name="longitude" Type="Double" />
           <Property Name="description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="charger_count" Type="Int32" />
           <Property Name="metropolitan_area_id" Type="Int32" />
           <NavigationProperty Name="metropolitan_area" Relationship="cidModel.location_ibfk_1" FromRole="location" ToRole="metropolitan_area" />
+          <NavigationProperty Name="charging_station_data" Relationship="cidModel.charging_station_data_ibfk_1" FromRole="location" ToRole="charging_station_data" />
         </EntityType>
         <EntityType Name="metropolitan_area">
           <Key>
@@ -113,6 +144,29 @@
           <Property Name="value" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="date" Type="DateTime" Nullable="false" />
         </EntityType>
+        <EntityType Name="charging_station_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postal_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="station_count" Type="Int32" />
+          <Property Name="port_count" Type="Int32" />
+          <Property Name="date" Type="DateTime" />
+          <NavigationProperty Name="location" Relationship="cidModel.charging_station_data_ibfk_1" FromRole="charging_station_data" ToRole="location" />
+        </EntityType>
+        <Association Name="charging_station_data_ibfk_1">
+          <End Type="cidModel.location" Role="location" Multiplicity="0..1" />
+          <End Type="cidModel.charging_station_data" Role="charging_station_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="postal_code" />
+            </Principal>
+            <Dependent Role="charging_station_data">
+              <PropertyRef Name="postal_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -123,7 +177,6 @@
             <EntityTypeMapping TypeName="cidModel.location">
               <MappingFragment StoreEntitySet="location">
                 <ScalarProperty Name="metropolitan_area_id" ColumnName="metropolitan_area_id" />
-                <ScalarProperty Name="charger_count" ColumnName="charger_count" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="latitude" ColumnName="latitude" />
@@ -148,6 +201,17 @@
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="charging_station_data">
+            <EntityTypeMapping TypeName="cidModel.charging_station_data">
+              <MappingFragment StoreEntitySet="charging_station_data">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="port_count" ColumnName="port_count" />
+                <ScalarProperty Name="station_count" ColumnName="station_count" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChargerID.AdServices", "Cha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChargerID.Configuration", "ChargerID.Configuration\ChargerID.Configuration.csproj", "{9C4966B5-72C9-4E89-BD04-0C7A9AFDEF96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChargerID.UpdateService", "ChargerID.UpdateService\ChargerID.UpdateService.csproj", "{7A5D4077-26EC-4BF9-AA3E-4F713DACF3E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{9C4966B5-72C9-4E89-BD04-0C7A9AFDEF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C4966B5-72C9-4E89-BD04-0C7A9AFDEF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C4966B5-72C9-4E89-BD04-0C7A9AFDEF96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A5D4077-26EC-4BF9-AA3E-4F713DACF3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A5D4077-26EC-4BF9-AA3E-4F713DACF3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A5D4077-26EC-4BF9-AA3E-4F713DACF3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A5D4077-26EC-4BF9-AA3E-4F713DACF3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

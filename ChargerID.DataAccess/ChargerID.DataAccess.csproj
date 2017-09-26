@@ -93,6 +93,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChargerIDModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="charging_station_data.cs">
+      <DependentUpon>ChargerIDModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess.cs" />
     <Compile Include="location.cs">
       <DependentUpon>ChargerIDModel.tt</DependentUpon>

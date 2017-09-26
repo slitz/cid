@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="cidModel.metropolitan_area" Width="1.5" PointX="0.75" PointY="3.25" />
         <AssociationConnector Association="cidModel.location_ibfk_1" />
         <EntityTypeShape EntityType="cidModel.app_config" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="cidModel.charging_station_data" Width="1.5" PointX="6.25" PointY="2.375" />
+        <AssociationConnector Association="cidModel.charging_station_data_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

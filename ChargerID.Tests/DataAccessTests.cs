@@ -74,8 +74,16 @@ namespace ChargerID.Tests
         public void AddChargingStationDataTest()
         {
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
-            var result = dl.addChargingStationData("85254", 3, 5);
+            var result = dl.AddChargingStationData("85254", 3, 5);
             Assert.That(result, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void GetChargingStationDataByPostalCodeTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var result = dl.GetChargingStationDataByPostalCode("85254");
+            Assert.That(result[0], Is.InstanceOf<charging_station_data>());
         }
     }
 }

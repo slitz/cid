@@ -154,7 +154,7 @@ namespace ChargerID.DataAccess
             }
         }
 
-        public long addChargingStationData(string postalCode, int chargingStationCount, int portCount)
+        public long AddChargingStationData(string postalCode, int chargingStationCount, int portCount)
         {
             long result = 0;
 
@@ -183,6 +183,29 @@ namespace ChargerID.DataAccess
             }
 
             return result;
+        }
+
+        public List<charging_station_data> GetChargingStationDataByPostalCode(string postal_code)
+        {
+            var list = new List<charging_station_data>();
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    var query = from c in dbContext.charging_station_data
+                                where c.postal_code == postal_code
+                                select c;
+
+                    list = query.ToList();
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve charging station data by postal code: {0}", postal_code);
+                }
+            }
+
+            return list;
         }
     }
 }

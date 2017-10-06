@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -62,8 +66,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChargerID.Business\ChargerID.Business.csproj">
+      <Project>{464d6da9-3aaa-4baa-8eed-fad370451cb0}</Project>
+      <Name>ChargerID.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChargerID.Configuration\ChargerID.Configuration.csproj">
       <Project>{9c4966b5-72c9-4e89-bd04-0c7a9afdef96}</Project>
       <Name>ChargerID.Configuration</Name>

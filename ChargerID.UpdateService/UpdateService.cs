@@ -7,6 +7,9 @@ using ChargerID.DataAccess;
 using ChargerID.Configuration;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.IO;
+using System.Reflection;
+using ChargerID.Business;
 
 namespace ChargerID.UpdateService
 {
@@ -23,35 +26,38 @@ namespace ChargerID.UpdateService
             get { return _config; }
         }
 
-        public UpdateService(IConfig config = null)
+        private readonly ILogHelper _logHelper;
+
+        public UpdateService(IConfig config = null, ILogHelper logHelper = null)
         {
             _config = config ?? new Config();
+            _logHelper = logHelper ?? new LogHelper();
         }
 
         public void RunUpdate()
         {
-            Console.WriteLine("Running update.");
+            _logHelper.WriteInfo("Running update.");
 
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
             IList<metropolitan_area> metroAreas = dl.GetAllMetropolitanAreas();
 
             try
             {
-                foreach (metropolitan_area area in metroAreas)
+                foreach (metropolitan_area area in metroAreas.Where(m => m.state.Equals("MI")))
                 {
                     List<location> locations = dl.GetLocationsByMetropolitanAreaId(area.id);
                     foreach (location l in locations)
                     {
                         string url = String.Format(_config.Update.NrelStationsUrl, l.city, l.state);
                         KeyValuePair<string, string> stationAndPortCounts = ExecuteChargingStationsGet(url);
-                        Console.WriteLine(stationAndPortCounts.Key + " " + stationAndPortCounts.Value);
+                        _logHelper.WriteInfo("postal code: " + l.postal_code + " stations: " + stationAndPortCounts.Key + " ports: " + stationAndPortCounts.Value);
                         dl.AddChargingStationData(l.postal_code, Convert.ToInt32(stationAndPortCounts.Key), Convert.ToInt32(stationAndPortCounts.Value));
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logHelper.WriteInfo(ex.Message);
             }
         }
 
@@ -68,7 +74,7 @@ namespace ChargerID.UpdateService
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    _logHelper.WriteInfo(e.Message);
                     return new KeyValuePair<string, string>("0", "0");
                 }
             }

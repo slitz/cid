@@ -12,6 +12,7 @@ namespace ChargerID.Business
     public interface ILogHelper
     {
         void WriteInfo(string msg, params object[] p);
+        void WriteError(string msg, params object[] p);
     }
 
     public class LogHelper : ILogHelper
@@ -32,6 +33,11 @@ namespace ChargerID.Business
         public void WriteInfo(string msg, params object[] p)
         {
             log.InfoFormat(msg, p);
+        }
+
+        public void WriteError(string msg, params object[] p)
+        {
+            log.ErrorFormat(msg, p);
         }
     }
 }

@@ -1,0 +1,420 @@
+﻿@using ChargerID.UI;
+@using ChargerID.UI.Models
+@model MapModel
+
+@{
+    ViewBag.Title = "ChargerID";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChargerID</title>
+    <style>
+      #map {        
+        height: 70vh;
+        width: 100%;
+       }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="padding-top: 3px;">
+                <img src="images/evgeo5.png" width="100" />
+            </a>
+        </div>
+        <div class="btn-group pull-right" style="margin-top: 15px;margin-right: 20px">
+            <a>@Html.ActionLink("Sign In", "Index", "SignIn")</a>                                    
+        </div>                                
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Electric Vehicle Activity Dashboard</h1>
+            </div>
+        </div>
+        <div class="panel panel-default" style="background-color:#f5f5f5">
+            <div class="panel-heading">U.S. Heatmap</div>
+            <div id="map" class="center-block" style="width: 100%;height: 630px;position:relative;overflow: hidden"></div>
+        </div>
+    </div>
+    <br />
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top U.S. Metropolitan Areas</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                <table id="us-cities-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Station Count</th>
+                        <th>Port Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @* populate dynamically *@
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div style="text-align:center">
+        <a href="~/blog/2017/08/04/introduction/">Learn about Project CID</a>
+    </div>
+    <div style="text-align:center">
+        <br />
+        <span><img src="~/images/ps_logo.png" height="42" width="42" />Powerlink Systems. Copyright © 2017. All Rights Reserved.</span>
+    </div>
+</body>
+</html>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Get data from model for use in script
+            var tableData = @Html.Raw(Json.Encode(Model.MapDataList.OrderByDescending(x => x.Stations).Take(25)));
+
+            var tableBodyRowsHtml = "<tr class='odd-table-row'><td class='text-center' colspan=3>No data found</tr></td>";
+            var usCitiesTableBody = $("#us-cities-table tbody");
+            if (tableData.length > 0) {
+                tableBodyRowsHtml = "";
+            }
+            for (var i = 0; i < tableData.length; i++) {
+                var rowHtml = "<tr><td>" + (i + 1) + "</td><td>" + tableData[i].City + "</td><td>" + tableData[i].State + "</td><td>" + tableData[i].Stations + "</td><td>" + tableData[i].Ports + "</td></ tr>";
+                tableBodyRowsHtml += rowHtml;
+            }
+
+            usCitiesTableBody.html(tableBodyRowsHtml);
+        });
+
+        function initMap() {
+            var usCenterLatLng = new google.maps.LatLng(39.5, -96) 
+            var mapOptions = {
+                zoom: 6,
+                center: usCenterLatLng,
+                backgroundColor: '#FFF',
+                disableDefaultUI: false,
+                styles: [
+                {
+                    "featureType": "administrative.neighborhood",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.land_parcel",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "hue": "#FFBB00"
+                        },
+                        {
+                            "saturation": 43.400000000000006
+                        },
+                        {
+                            "lightness": 37.599999999999994
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape.man_made",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "hue": "#00FF6A"
+                        },
+                        {
+                            "saturation": -1.0989010989011234
+                        },
+                        {
+                            "lightness": 11.200000000000017
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.attraction",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.business",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.government",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.place_of_worship",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.school",
+                    "elementType": "labels.text",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.sports_complex",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "hue": "#FFC200"
+                        },
+                        {
+                            "saturation": -61.8
+                        },
+                        {
+                            "lightness": 45.599999999999994
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "hue": "#FF0300"
+                        },
+                        {
+                            "saturation": -100
+                        },
+                        {
+                            "lightness": 51.19999999999999
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "hue": "#FF0300"
+                        },
+                        {
+                            "saturation": -100
+                        },
+                        {
+                            "lightness": 52
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit.station.bus",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit.station.bus",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit.station.bus",
+                    "elementType": "labels.icon",
+                    "stylers": [
+                        {
+                            "hue": "#6800ff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit.station.rail",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        },
+                        {
+                            "saturation": -13.200000000000003
+                        },
+                        {
+                            "lightness": 2.4000000000000057
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                }
+                ]
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            
+            // Get data from model for use in script
+            var mapData = @Html.Raw(Json.Encode(Model.MapDataList));
+
+            // Populate heatmapData array and info window with data from model
+            var heatmapData = [];
+            mapData.forEach(function (item, index) {
+                heatmapData.push({location: new google.maps.LatLng(item.Latitude, item.Longitude), weight: item.Stations})
+                var contentString = item.City + ', ' + item.State + '<br/>Station count: ' + item.Stations + '<br/>Port count: ' + item.Ports;
+                var infoWindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                var latLng = new google.maps.LatLng(item.Latitude, item.Longitude);
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 2,
+                        strokeColor: "#FFBB00"
+                    },
+                    map: map
+                });
+                marker.addListener('mouseover', () => infoWindow.open(map, marker))
+                marker.addListener('mouseout', () => infoWindow.close())
+            });
+
+            var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(25.82, -121.39), new google.maps.LatLng(49.38, -69.94));
+
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: heatmapData,
+                dissipating: true,
+                radius: 20,
+                map: map
+            });
+
+            var screenWidthToChangeZoom = 400;
+
+            //Resize Function
+            google.maps.event.addDomListener(window, "resize", function () {
+                var center = map.getCenter();
+                google.maps.event.trigger(map, "resize");
+                map.setCenter(center);
+                //map.fitBounds(bounds);
+                if (window.innerWidth < screenWidthToChangeZoom || document.documentElement.clientWidth < screenWidthToChangeZoom || document.body.clientWidth < screenWidthToChangeZoom) {
+                    map.setZoom(3);
+                } else {
+                    map.setZoom(4);
+                }
+            });
+
+            //map.fitBounds(bounds);
+            if (window.innerWidth < screenWidthToChangeZoom || document.documentElement.clientWidth < screenWidthToChangeZoom || document.body.clientWidth < screenWidthToChangeZoom) {
+                map.setZoom(3);
+            } else {
+                map.setZoom(4);
+            }
+
+            heatmap.setMap(map);
+        }
+
+    </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq2EPwjdTAjyqFu90W-3hLTvN2AZnRSmA&libraries=visualization&callback=initMap">
+    </script>
+}

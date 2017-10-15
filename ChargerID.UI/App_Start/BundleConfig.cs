@@ -10,9 +10,9 @@ namespace ChargerID.UI.App_Start
 
             bundles.Add(new StyleBundle("~/Content/css")
                 //.Include("~/Content/site.css")
-                .Include("~/Content/bootstrap.css"));
-                //.Include("~/Content/font-awesome.css")
-                //.Include("~/Content/custom.css"));
+                .Include("~/Content/bootstrap.css")
+                // .Include("~/Content/font-awesome.css")
+                .Include("~/Content/custom.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",

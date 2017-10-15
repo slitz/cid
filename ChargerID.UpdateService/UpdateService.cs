@@ -43,7 +43,7 @@ namespace ChargerID.UpdateService
 
             try
             {
-                foreach (metropolitan_area area in metroAreas.Where(m => m.state.Equals("MI")))
+                foreach (metropolitan_area area in metroAreas)
                 {
                     List<location> locations = dl.GetLocationsByMetropolitanAreaId(area.id);
                     foreach (location l in locations)
@@ -57,7 +57,7 @@ namespace ChargerID.UpdateService
             }
             catch (Exception ex)
             {
-                _logHelper.WriteInfo(ex.Message);
+                _logHelper.WriteError(ex.Message);
             }
         }
 
@@ -74,7 +74,7 @@ namespace ChargerID.UpdateService
                 }
                 catch (Exception e)
                 {
-                    _logHelper.WriteInfo(e.Message);
+                    _logHelper.WriteError(e.Message);
                     return new KeyValuePair<string, string>("0", "0");
                 }
             }

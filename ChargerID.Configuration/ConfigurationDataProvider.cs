@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ChargerID.Configuration
@@ -6,6 +7,8 @@ namespace ChargerID.Configuration
     public interface IConfigurationDataProvider
     {
         string GetStringValue(string name, string defaultValue);
+        long GetLongValue(string name, long? defaultValue);
+        int GetIntValue(string name, int? defaultValue);
     }
 
     class ConfigurationDataProvider : IConfigurationDataProvider
@@ -36,6 +39,34 @@ namespace ChargerID.Configuration
             }
 
             return defaultValue;
+        }
+
+        public int GetIntValue(string name, int? defaultValue)
+        {
+            string defaultStringValue = defaultValue != null ? defaultValue.ToString() : null;
+            string stringValue = GetStringValue(name, defaultStringValue);
+
+            int result;
+            if (!int.TryParse(stringValue, out result))
+            {
+                throw new InvalidCastException(string.Format("Value for setting name '{0}' cannot convert value '{1}' to an Int32 value.", name, stringValue));
+            }
+
+            return result;
+        }
+
+        public long GetLongValue(string name, long? defaultValue)
+        {
+            string defaultStringValue = defaultValue != null ? defaultValue.ToString() : null;
+            string stringValue = GetStringValue(name, defaultStringValue);
+
+            long result;
+            if (!long.TryParse(stringValue, out result))
+            {
+                throw new InvalidCastException(string.Format("Value for setting name '{0}' cannot convert value '{1}' to an Int32 value.", name, stringValue));
+            }
+
+            return result;
         }
     }
 }

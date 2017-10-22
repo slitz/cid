@@ -93,6 +93,9 @@
     <Compile Include="Partner\AdServices\Google\LocationNameHelper.cs" />
     <Compile Include="Partner\LocatorServices\ChargingStations\NrelClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateService\AdServicesClient.cs" />
+    <Compile Include="UpdateService\UpdateServiceHelper.cs" />
+    <Compile Include="UpdateService\LocatorServicesClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

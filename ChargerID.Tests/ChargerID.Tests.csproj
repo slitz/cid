@@ -75,6 +75,7 @@
     <Compile Include="Business\Partner\AdServices\Google\AdwordsClientTests.cs" />
     <Compile Include="Business\Partner\AdServices\Google\LocationNameHelperTests.cs" />
     <Compile Include="Business\Partner\LocatorServices\Nrel\NrelClientTests.cs" />
+    <Compile Include="UpdateServiceTests.cs" />
     <Compile Include="DataAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,6 +95,14 @@
     <ProjectReference Include="..\ChargerID.DataAccess\ChargerID.DataAccess.csproj">
       <Project>{2c99e885-9830-4f62-bf6f-b6b5c27aa4dd}</Project>
       <Name>ChargerID.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChargerID.LocatorServices\ChargerID.LocatorServices.csproj">
+      <Project>{97ebad36-6156-444f-bed5-f4e3ad1faa1d}</Project>
+      <Name>ChargerID.LocatorServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChargerID.UpdateService\ChargerID.UpdateService.csproj">
+      <Project>{7a5d4077-26ec-4bf9-aa3e-4f713dacf3e2}</Project>
+      <Name>ChargerID.UpdateService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

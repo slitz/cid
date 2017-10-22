@@ -13,8 +13,10 @@ namespace ChargerID.DataAccess
     {
         List<app_config> GetAppConfigs();
         List<metropolitan_area> GetAllMetropolitanAreas();
+        location GetLocationByPostalCode(string postalCode);
         List<location> GetLocationsByMetropolitanAreaId(Int32 metroAreaId);
         List<charging_station_data> GetChargingStationDataByPostalCode(string postal_code);
+        long AddChargingStationData(string postalCode, int chargingStationCount, int portCount);
     }
 
     public class DataAccess : IDataAccess

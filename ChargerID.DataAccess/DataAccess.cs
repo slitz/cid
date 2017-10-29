@@ -17,6 +17,8 @@ namespace ChargerID.DataAccess
         List<location> GetLocationsByMetropolitanAreaId(Int32 metroAreaId);
         List<charging_station_data> GetChargingStationDataByPostalCode(string postal_code);
         long AddChargingStationData(string postalCode, int chargingStationCount, int portCount);
+        state GetStateByStateName(string name);
+        state GetStateByStateCode(string code);
     }
 
     public class DataAccess : IDataAccess
@@ -211,6 +213,44 @@ namespace ChargerID.DataAccess
             }
 
             return list;
+        }
+
+        public state GetStateByStateName(string name)
+        {
+            state entity = new state();
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    entity = dbContext.states.FirstOrDefault(row => row.state_name == name);
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve state by name: {0}", name);
+                }
+            }
+
+            return entity;
+        }
+
+        public state GetStateByStateCode(string code)
+        {
+            state entity = new state();
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    entity = dbContext.states.FirstOrDefault(row => row.state_cd == code);
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve state by code: {0}", code);
+                }
+            }
+
+            return entity;
         }
     }
 }

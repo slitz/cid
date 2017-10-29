@@ -87,14 +87,23 @@ namespace ChargerID.UpdateService
             List<KeyValuePair<string, string>> targetsToAdd = topLocations.Except(currentTargets).ToList();
 
             // for each target to remove call ad services api with central city and state from metro area and update mode 1 (remove)
-            if (targetsToRemove != null && targetsToRemove.Count > 0)
+            if (targetsToRemove == null || targetsToRemove.Count <= 0)
             {
+                _logHelper.WriteInfo("No targets to remove.");
+            }
+            else 
+            {
+                _logHelper.WriteInfo("Removing " + targetsToRemove.Count.ToString() + " targets.");
                 try
                 {
                     bool targetsRemovedSuccessfully = _adServicesClient.SendAdservicesTargetsPost(targetsToRemove, UpdateMode.Remove);
                     if (!targetsRemovedSuccessfully)
                     {
                         _logHelper.WriteError("Failed to remove targets.");
+                    }
+                    else
+                    {
+                        _logHelper.WriteInfo("Targets removed successfully.");
                     }
                 }
                 catch (Exception e)
@@ -104,14 +113,23 @@ namespace ChargerID.UpdateService
             }
 
             // for each target to add call ad services api with central city and state from metro area and update mode 0 (add)
-            if (targetsToAdd != null && targetsToAdd.Count > 0)
+            if (targetsToAdd == null || targetsToAdd.Count <= 0)
             {
+                _logHelper.WriteInfo("No targets to add.");
+            }
+            else
+            {
+                _logHelper.WriteInfo("Adding " + targetsToAdd.Count.ToString() + " targets.");
                 try
                 {
-                    bool targetsAddedSuccessfully = _adServicesClient.SendAdservicesTargetsPost(targetsToRemove, UpdateMode.Add);
+                    bool targetsAddedSuccessfully = _adServicesClient.SendAdservicesTargetsPost(targetsToAdd, UpdateMode.Add);
                     if (!targetsAddedSuccessfully)
                     {
                         _logHelper.WriteError("Failed to add targets");
+                    }
+                    else
+                    {
+                        _logHelper.WriteInfo("Targets added successfully.");
                     }
                 }
                 catch (Exception e)

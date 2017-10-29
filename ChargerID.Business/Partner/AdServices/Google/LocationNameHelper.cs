@@ -85,11 +85,11 @@ namespace ChargerID.Business.Partner.AdServices.Google
             {
                 foreach (LocationCriterion target in locationCriteria)
                 {
-                    if (target.location.locationName == name.Key && target.location.displayType == "City")
+                    if (target.location.locationName.Equals(name.Key, StringComparison.InvariantCultureIgnoreCase) && target.location.displayType == "City")
                     {
                         for (int i = 0; i < target.location.parentLocations.Length; i++)
                         {
-                            if (target.location.parentLocations[i].displayType == "State" && target.location.parentLocations[i].locationName == name.Value)
+                            if (target.location.parentLocations[i].displayType == "State" && target.location.parentLocations[i].locationName.Equals(name.Value, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 targets.Add(new GeoTarget()
                                 {

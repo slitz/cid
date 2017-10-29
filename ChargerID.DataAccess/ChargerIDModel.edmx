@@ -44,6 +44,13 @@
           <Property Name="name" Type="varchar" MaxLength="75" />
           <Property Name="state" Type="text" />
         </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="state_cd" />
+          </Key>
+          <Property Name="state_cd" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="state_name" Type="varchar" MaxLength="50" />
+        </EntityType>
         <Association Name="charging_station_data_ibfk_1">
           <End Role="location" Type="Self.location" Multiplicity="0..1" />
           <End Role="charging_station_data" Type="Self.charging_station_data" Multiplicity="*" />
@@ -73,6 +80,7 @@
           <EntitySet Name="charging_station_data" EntityType="Self.charging_station_data" Schema="cid" store:Type="Tables" />
           <EntitySet Name="location" EntityType="Self.location" Schema="cid" store:Type="Tables" />
           <EntitySet Name="metropolitan_area" EntityType="Self.metropolitan_area" Schema="cid" store:Type="Tables" />
+          <EntitySet Name="state" EntityType="Self.state" Schema="cid" store:Type="Tables" />
           <AssociationSet Name="charging_station_data_ibfk_1" Association="Self.charging_station_data_ibfk_1">
             <End Role="location" EntitySet="location" />
             <End Role="charging_station_data" EntitySet="charging_station_data" />
@@ -99,6 +107,7 @@
             <End Role="location" EntitySet="locations" />
             <End Role="charging_station_data" EntitySet="charging_station_data" />
           </AssociationSet>
+          <EntitySet Name="states" EntityType="cidModel.state" />
         </EntityContainer>
         <EntityType Name="location">
           <Key>
@@ -167,6 +176,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="state_cd" />
+          </Key>
+          <Property Name="state_cd" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="state_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -213,6 +229,14 @@
                 <ScalarProperty Name="station_count" ColumnName="station_count" />
                 <ScalarProperty Name="postal_code" ColumnName="postal_code" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="states">
+            <EntityTypeMapping TypeName="cidModel.state">
+              <MappingFragment StoreEntitySet="state">
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+                <ScalarProperty Name="state_cd" ColumnName="state_cd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

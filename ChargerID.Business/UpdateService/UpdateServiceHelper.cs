@@ -43,7 +43,8 @@ namespace ChargerID.Business
             foreach (charging_station_data item in dataList.OrderByDescending(x => x.station_count).Take(count))
             {
                 location location = _dl.GetLocationByPostalCode(item.postal_code);
-                locationList.Add(new KeyValuePair<string, string>(location.city.ToLower(), location.state.ToLower()));
+                state state = _dl.GetStateByStateCode(location.state);
+                locationList.Add(new KeyValuePair<string, string>(location.city.ToLower(), state.state_name.ToLower()));
             }
 
             return locationList;

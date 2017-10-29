@@ -29,5 +29,6 @@ namespace ChargerID.DataAccess
         public virtual DbSet<metropolitan_area> metropolitan_area { get; set; }
         public virtual DbSet<app_config> app_config { get; set; }
         public virtual DbSet<charging_station_data> charging_station_data { get; set; }
+        public virtual DbSet<state> states { get; set; }
     }
 }

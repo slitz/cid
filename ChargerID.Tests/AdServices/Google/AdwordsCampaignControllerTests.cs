@@ -18,11 +18,12 @@ namespace ChargerID.Tests
         {
             AdwordsCampaignController controller = new AdwordsCampaignController();
             List<GeoLocation> list = new List<GeoLocation>();
-            list.Add(new GeoLocation () { City = "Miami", State = "Florida" });
+            list.Add(new GeoLocation() { City = "Miami", State = "Florida" });
+            //list.Add(new GeoLocation() { City = "tempe", State = "arizona" });
             UpdateGeoTargetsRequest request = new UpdateGeoTargetsRequest() 
             {
                 GeoLocation = list,
-                UpdateMode = UpdateMode.Remove
+                UpdateMode = UpdateMode.Add
             };
             controller.UpdateGeoTargets("927060915", request);
         }

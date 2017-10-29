@@ -85,5 +85,21 @@ namespace ChargerID.Tests
             var result = dl.GetChargingStationDataByPostalCode("85254");
             Assert.That(result[0], Is.InstanceOf<charging_station_data>());
         }
+
+        [Test]
+        public void GetStateByStateNameTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var result = dl.GetStateByStateName("Michigan");
+            Assert.That(result.state_cd, Is.EqualTo("MI"));
+        }
+
+        [Test]
+        public void GetStateByStateCodeTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var result = dl.GetStateByStateCode("MI");
+            Assert.That(result.state_name, Is.EqualTo("Michigan"));
+        }
     }
 }

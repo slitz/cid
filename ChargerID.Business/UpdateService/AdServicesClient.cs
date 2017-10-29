@@ -79,12 +79,14 @@ namespace ChargerID.Business
                     var response = client.PostAsJsonAsync(url, request);
                     string resultString = response.Result.Content.ReadAsStringAsync().Result;
                     var json = JsonConvert.DeserializeObject<dynamic>(resultString);
-                    // return new KeyValuePair<string, string>(json.data.Stations.ToString(), json.data.Ports.ToString());
+                    if (json.data.Success == "true")
+                    {
+                        success = true;
+                    }
                 }
                 catch (Exception e)
                 {
                     _logHelper.WriteError(e.Message);
-                    // return new KeyValuePair<string, string>("0", "0");
                 }
             }
 

@@ -41,8 +41,17 @@ namespace ChargerID.UpdateService
         {
             _logHelper.WriteInfo("Running update.");
 
-            //RefreshLocationIndicatorData();
-            SetAdTargets();
+            if (_config.Update.EnableLocationIndicatorDataRefresh)
+            {
+                RefreshLocationIndicatorData();
+            }
+
+            if (_config.Update.EnableCampaignUpdate)
+            {
+                SetAdTargets();
+            }
+
+            _logHelper.WriteInfo("Update complete.");
         }
 
         private void RefreshLocationIndicatorData()
@@ -86,7 +95,7 @@ namespace ChargerID.UpdateService
             List<KeyValuePair<string, string>> targetsToRemove = currentTargets.Except(topLocations).ToList();
             List<KeyValuePair<string, string>> targetsToAdd = topLocations.Except(currentTargets).ToList();
 
-            // for each target to remove call ad services api with central city and state from metro area and update mode 1 (remove)
+            // call ad services api with list of central cities/states from each metro area to remove and update mode 1 (remove)
             if (targetsToRemove == null || targetsToRemove.Count <= 0)
             {
                 _logHelper.WriteInfo("No targets to remove.");
@@ -112,7 +121,7 @@ namespace ChargerID.UpdateService
                 }
             }
 
-            // for each target to add call ad services api with central city and state from metro area and update mode 0 (add)
+            // call ad services api with list of central cities/states from each metro area to add and update mode 0 (add)
             if (targetsToAdd == null || targetsToAdd.Count <= 0)
             {
                 _logHelper.WriteInfo("No targets to add.");

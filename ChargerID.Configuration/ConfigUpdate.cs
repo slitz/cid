@@ -7,6 +7,8 @@ namespace ChargerID.Configuration
         string AdwordsTargetsUrl { get; }
         long AdwordsCampaignId { get; }
         int MaxAdwordsTargets { get; }
+        bool EnableLocationIndicatorDataRefresh { get; }
+        bool EnableCampaignUpdate { get; }
     }
 
     public class ConfigUpdate : IConfigUpdate
@@ -17,6 +19,8 @@ namespace ChargerID.Configuration
         public const string AdwordsTargetsUrlAttribute = "adwordsTargetsUrl";
         public const string AdwordsCampaignIdAttribute = "adwordsCampaignId";
         public const string MaxAdwordsTargetsAttribute = "maxAdwordsTargets";
+        public const string EnableLocationIndicatorDataRefreshAttribute = "enableLocationIndicatorDataRefresh";
+        public const string EnableCampaignUpdateAttribute = "enableCampaignUpdate";
 
         public ConfigUpdate(IConfigurationDataProvider configurationDataProvider)
         {
@@ -56,6 +60,23 @@ namespace ChargerID.Configuration
             {
                 string name = string.Format("{0}/@{1}", SettingNameBase, MaxAdwordsTargetsAttribute);
                 return _configurationDataProvider.GetIntValue(name, defaultValue: null);
+            }
+        }
+
+        public bool EnableLocationIndicatorDataRefresh
+        {
+            get
+            {
+                string name = string.Format("{0}/@{1}", SettingNameBase, EnableLocationIndicatorDataRefreshAttribute);
+                return _configurationDataProvider.GetBoolValue(name, defaultValue: null);
+            }
+        }
+        public bool EnableCampaignUpdate
+        {
+            get
+            {
+                string name = string.Format("{0}/@{1}", SettingNameBase, EnableCampaignUpdateAttribute);
+                return _configurationDataProvider.GetBoolValue(name, defaultValue: null);
             }
         }
     }

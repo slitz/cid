@@ -9,6 +9,7 @@ namespace ChargerID.Configuration
         string GetStringValue(string name, string defaultValue);
         long GetLongValue(string name, long? defaultValue);
         int GetIntValue(string name, int? defaultValue);
+        bool GetBoolValue(string name, bool? defaultValue);
     }
 
     class ConfigurationDataProvider : IConfigurationDataProvider
@@ -63,7 +64,21 @@ namespace ChargerID.Configuration
             long result;
             if (!long.TryParse(stringValue, out result))
             {
-                throw new InvalidCastException(string.Format("Value for setting name '{0}' cannot convert value '{1}' to an Int32 value.", name, stringValue));
+                throw new InvalidCastException(string.Format("Value for setting name '{0}' cannot convert value '{1}' to a long value.", name, stringValue));
+            }
+
+            return result;
+        }
+
+        public bool GetBoolValue(string name, bool? defaultValue)
+        {
+            string defaultStringValue = defaultValue != null ? defaultValue.ToString() : null;
+            string stringValue = GetStringValue(name, defaultStringValue);
+
+            bool result;
+            if (!bool.TryParse(stringValue, out result))
+            {
+                throw new InvalidCastException(string.Format("Value for setting name '{0}' cannot convert value '{1}' to a bool value.", name, stringValue));
             }
 
             return result;

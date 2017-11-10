@@ -57,6 +57,7 @@
     <Compile Include="ConfigurationWrapper.cs" />
     <Compile Include="ConfigNrel.cs" />
     <Compile Include="ConfigUpdate.cs" />
+    <Compile Include="ConfigUi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ namespace ChargerID.Configuration
         IConfigAdwords Adwords { get; }
         IConfigNrel Nrel { get; }
         IConfigUpdate Update { get; }
+        IConfigUi Ui { get; }
     }
 
     public class Config : IConfig
@@ -16,6 +17,7 @@ namespace ChargerID.Configuration
         private IConfigAdwords _configAdwords;
         private IConfigNrel _configNrel;
         private IConfigUpdate _configUpdate;
+        private IConfigUi _configUi;
 
         public Config()
         {
@@ -29,6 +31,7 @@ namespace ChargerID.Configuration
             _configAdwords = new ConfigAdwords(_configurationDataProvider);
             _configNrel = new ConfigNrel(_configurationDataProvider);
             _configUpdate = new ConfigUpdate(_configurationDataProvider);
+            _configUi = new ConfigUi(_configurationDataProvider);
         }
 
         public IConfigDatabase Database
@@ -60,6 +63,14 @@ namespace ChargerID.Configuration
             get
             {
                 return _configUpdate;
+            }
+        }
+
+        public IConfigUi Ui
+        {
+            get
+            {
+                return _configUi;
             }
         }
     }

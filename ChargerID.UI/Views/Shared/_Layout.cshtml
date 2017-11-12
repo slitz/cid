@@ -12,16 +12,34 @@
 </head>
 <body>
     <div>
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px;position:fixed;width:100%">
             <div class="navbar-header">
                 <a class="navbar-brand" style="padding-top: 3px;" href="/Dashboard">
-                    <img src="images/evgeo5.png" width="100" />
+                    <img src="~/images/evgeo5.png" width="100" />
                 </a>
+                <div class="btn-group pull-left" style="margin-right: 20px">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Dashboard")</li>
+                        @if(Request.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Admin Center", "Index", "Admin")</li>
+                        }
+                    </ul>
+                </div>
             </div>
             <div class="btn-group pull-right" style="margin-top: 15px;margin-right: 20px">
-                <a>@Html.ActionLink("Sign In", "Index", "SignIn")</a>                                    
+                @if (Request.IsAuthenticated)  
+                {  
+                    @Html.ActionLink("Log Out", "Logout", "SignIn")  
+                }  
+                else  
+                {  
+                    @Html.ActionLink("Log In", "Index", "Admin")  
+                }
             </div>
         </nav>
+        <br />
+        <br />
         @RenderBody()
     </div>
 

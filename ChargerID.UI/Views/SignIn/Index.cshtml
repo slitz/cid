@@ -14,18 +14,19 @@
     <title>ChargerID Sign In</title>
 </head>
 <body>
-
+    <br />
+    <br />
     <div class="container">
         <div class="form-signin">
             <h2 class="form-signin-heading">Please sign in</h2>
-            @using (Html.BeginForm("Index", "SignIn", FormMethod.Post, new { Username = @Model.Username, Password = @Model.Password }))
+            @using (Html.BeginForm("Index", "SignIn", FormMethod.Post, new { Username = @Model.Username, Password = @Model.Password, Error = @Model.Error }))
             {
             <label for="inputEmail" class="sr-only">Email address</label>
             <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="username" value="@Model.Username" required autofocus style="margin-bottom: 10px;">
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" value="@Model.Password" required style="margin-bottom: 10px;">
             <button class="btn btn-lg btn-primary btn-block"  onclick="$(this).closest('form').submit(); return false;" type="submit">Sign in</button>
-            <label class="sr-only">@Model.Error</label>
+            <input type="text" id="inputError" class="form-control" style="border:none;text-align:center;color:red" name="error" value="@Model.Error" />
             }
         </div>
     </div> <!-- /container -->

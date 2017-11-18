@@ -41,6 +41,10 @@ namespace ChargerID.UI.Controllers
             return View(mapModel);
         }
 
+        /// <summary>
+        /// Retrieve's the latest location data from the database for plotting on a map
+        /// </summary>
+        /// <returns></returns>
         private List<MapData> GetMapData()
         {
             List<MapData> list = new List<MapData>();

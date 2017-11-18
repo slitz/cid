@@ -10,6 +10,7 @@ namespace ChargerID.Configuration
         long GetLongValue(string name, long? defaultValue);
         int GetIntValue(string name, int? defaultValue);
         bool GetBoolValue(string name, bool? defaultValue);
+        DateTime GetDateTimeValue(string name, DateTime? defaultValue);
     }
 
     class ConfigurationDataProvider : IConfigurationDataProvider
@@ -79,6 +80,20 @@ namespace ChargerID.Configuration
             if (!bool.TryParse(stringValue, out result))
             {
                 throw new InvalidCastException(string.Format("Value for setting name '{0}' cannot convert value '{1}' to a bool value.", name, stringValue));
+            }
+
+            return result;
+        }
+
+        public DateTime GetDateTimeValue(string name, DateTime? defaultValue)
+        {
+            string defaultStringValue = defaultValue != null ? defaultValue.ToString() : null;
+            string stringValue = GetStringValue(name, defaultStringValue);
+
+            DateTime result;
+            if (!DateTime.TryParse(stringValue, out result))
+            {
+                throw new InvalidCastException(string.Format("Value for setting name '{0}' cannot convert value '{1}' to a DateTime value.", name, stringValue));
             }
 
             return result;

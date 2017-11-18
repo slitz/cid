@@ -164,6 +164,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,6 +191,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChargerID.Business\ChargerID.Business.csproj">
+      <Project>{464d6da9-3aaa-4baa-8eed-fad370451cb0}</Project>
+      <Name>ChargerID.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChargerID.Configuration\ChargerID.Configuration.csproj">
       <Project>{9c4966b5-72c9-4e89-bd04-0c7a9afdef96}</Project>
       <Name>ChargerID.Configuration</Name>

@@ -1,4 +1,5 @@
 ﻿
+using System;
 namespace ChargerID.Configuration
 {
     public interface IConfigUpdate
@@ -9,6 +10,7 @@ namespace ChargerID.Configuration
         int MaxAdwordsTargets { get; }
         bool EnableLocationIndicatorDataRefresh { get; }
         bool EnableCampaignUpdate { get; }
+        DateTime LastRunDateTime { get; }
     }
 
     public class ConfigUpdate : IConfigUpdate
@@ -21,6 +23,7 @@ namespace ChargerID.Configuration
         public const string MaxAdwordsTargetsAttribute = "maxAdwordsTargets";
         public const string EnableLocationIndicatorDataRefreshAttribute = "enableLocationIndicatorDataRefresh";
         public const string EnableCampaignUpdateAttribute = "enableCampaignUpdate";
+        public const string LastRunDataTimeAttribute = "lastRunDateTime";
 
         public ConfigUpdate(IConfigurationDataProvider configurationDataProvider)
         {
@@ -71,12 +74,22 @@ namespace ChargerID.Configuration
                 return _configurationDataProvider.GetBoolValue(name, defaultValue: null);
             }
         }
+
         public bool EnableCampaignUpdate
         {
             get
             {
                 string name = string.Format("{0}/@{1}", SettingNameBase, EnableCampaignUpdateAttribute);
                 return _configurationDataProvider.GetBoolValue(name, defaultValue: null);
+            }
+        }
+
+        public DateTime LastRunDateTime
+        {
+            get
+            {
+                string name = string.Format("{0}/@{1}", SettingNameBase, LastRunDataTimeAttribute);
+                return _configurationDataProvider.GetDateTimeValue(name, defaultValue: null);
             }
         }
     }

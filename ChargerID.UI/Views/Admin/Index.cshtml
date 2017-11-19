@@ -1,6 +1,6 @@
 ﻿@using ChargerID.UI;
 @using ChargerID.UI.Models
-@model MapModel
+@model AdminModel
 
 @{
     ViewBag.Title = "ChargerID Admin Center";
@@ -28,33 +28,171 @@
         </div> 
     </div>
     <div class="container">
-        <div class="panel panel-default" style="float:left">
-            <div class="panel-heading">Current Location Targets</div>
+        <div class="row">
+            <div class="col-md-7" style="float:none">
+                <div class="panel panel-default" style="float:left">
+            <div class="panel-heading">Current Campaign Targets</div>
             <div class="panel-body">
                 <div class="table-responsive">
-                <table id="us-cities-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>City</th>
-                        <th>State</th>
-                    </tr>
+                <table id="campaign-targets-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+                    <thead>
+                        <tr>
+                            <th>City</th>
+                            <th>State</th>
+                        </tr>
                     </thead>
                     <tbody>
                     @* populate dynamically *@
                     </tbody>
                 </table>
+                </div>
             </div>
+        </div>
+            </div>
+            <div class="col-md-7" style="float:none">
+                <div style="float:right">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">System Settings</div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                            <table id="system-settings-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @* populate dynamically *@
+                                </tbody>
+                            </table>
+                            <div><button id="update-btn" type="submit" class="btn btn-primary center-block">Update Settings</button></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="panel panel-default">
+                        <div class="panel-heading">System Info</div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                            <table id="system-runtime-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+                            <tbody>
+                                <tr><td>Last Run Time:</td><td style="text-align:center">@Model.LastSystemRunDate</td></tr>
+                                <tr><td>Next Run Time:</td><td style="text-align:center">@Model.LastSystemRunDate</td></tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
 
+@* Model for updating system settings *@
+    <div id="update-settings-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Update Settings</h4>
+          </div>
+            <div class="modal-body" style="overflow-y: auto; max-height: 400px;">
+      
+                <table id="update-settings-table" class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th >Name</th>
+                        <th >Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Campaign Target Count</td>
+                            <td>@Html.DropDownList("update-target-count-combobox", 
+                                new SelectList(
+                                    new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text = "0", Value = "0" },
+                                            new SelectListItem{ Text = "1", Value = "1" },
+                                            new SelectListItem{ Text = "2", Value = "2" },
+                                            new SelectListItem{ Text = "5", Value = "5" },
+                                            new SelectListItem{ Text = "10", Value = "10" }   
+                                        }, "Value", "Text"), new Dictionary<string, object>() {{"class", "form-control"}, {"style", "width:100%"}})
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Enable Data Updates</td>
+                            <td>@Html.DropDownList("enable-data-updates-combobox", 
+                                new SelectList(
+                                    new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text = "True", Value = "true" },
+                                            new SelectListItem{ Text = "False", Value = "false" } 
+                                        }, "Value", "Text"), new Dictionary<string, object>() {{"class", "form-control"}, {"style", "width:100%"}})
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Enable Campaign Updates</td>
+                            <td>@Html.DropDownList("enable-campaign-updates-combobox", 
+                                new SelectList(
+                                    new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text = "True", Value = "true" },
+                                            new SelectListItem{ Text = "False", Value = "false" } 
+                                        }, "Value", "Text"), new Dictionary<string, object>() {{"class", "form-control"}, {"style", "width:100%"}})
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-link" data-dismiss="modal" aria-label="Close">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 @section scripts
 {
     <script type="text/javascript">
         $(document).ready(function() {
+
+            // Campaign Targets table 
+            var campaignTargetsTableData = @Html.Raw(Json.Encode(Model.CurrentTargetsList));
+
+            var campaignTargetsTableBodyRowsHtml = "<tr class='odd-table-row'><td class='text-center' colspan=3>No data found</tr></td>";
+            var campaignTargetsTableBody = $("#campaign-targets-table tbody");
+            if (campaignTargetsTableData.length > 0) {
+                campaignTargetsTableBodyRowsHtml = "";
+            }
+            for (var i = 0; i < campaignTargetsTableData.length; i++) {
+                var campaignTargetsRowHtml = "<tr><td>" + campaignTargetsTableData[i].City + "</td><td>" + campaignTargetsTableData[i].State + "</td></ tr>";
+                campaignTargetsTableBodyRowsHtml += campaignTargetsRowHtml;
+            }
+
+            campaignTargetsTableBody.html(campaignTargetsTableBodyRowsHtml);
+
+            // System Settings table 
+            var systemSettingsTableData = @Html.Raw(Json.Encode(Model.SystemSettingsList));
+
+            var systemSettingsTableBodyRowsHtml = "<tr class='odd-table-row'><td class='text-center' colspan=3>No data found</tr></td>";
+            var systemSettingsTableBody = $("#system-settings-table tbody");
+            if (systemSettingsTableData.length > 0) {
+                systemSettingsTableBodyRowsHtml = "";
+            }
+            for (var i = 0; i < systemSettingsTableData.length; i++) {
+                var systemSettingsRowHtml = "<tr><td>" + systemSettingsTableData[i].Name + "</td><td>" + systemSettingsTableData[i].Value + "</td></ tr>";
+                systemSettingsTableBodyRowsHtml += systemSettingsRowHtml;
+            }
+
+            systemSettingsTableBody.html(systemSettingsTableBodyRowsHtml);
+
+            $("#update-btn").click(function(e) {
+                var modal = $('#update-settings-modal').modal('show');
+            });
         });
     </script>
 }

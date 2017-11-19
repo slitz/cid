@@ -11,6 +11,7 @@ namespace ChargerID.UI.Models
         public List<GeoTarget> CurrentTargetsList { get; set; }
         public List<SystemSettings> SystemSettingsList { get; set; }
         public DateTime LastSystemRunDate { get; set; }
+        public List<System.Web.Mvc.SelectListItem> CampaignTargetCountSelectionItems { get; set; }
     }
 
     public class SystemSettings

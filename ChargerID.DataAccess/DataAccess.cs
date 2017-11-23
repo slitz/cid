@@ -19,6 +19,7 @@ namespace ChargerID.DataAccess
         long AddChargingStationData(string postalCode, int chargingStationCount, int portCount);
         state GetStateByStateName(string name);
         state GetStateByStateCode(string code);
+        bool UpdateAppConfig(string name, string value);
     }
 
     public class DataAccess : IDataAccess
@@ -251,6 +252,28 @@ namespace ChargerID.DataAccess
             }
 
             return entity;
+        }
+
+        public bool UpdateAppConfig(string name, string value)
+        {
+            bool result = true;
+
+            using (CIDEntities dbContext = new CIDEntities())
+            {
+                try
+                {
+                    app_config entity = dbContext.app_config.FirstOrDefault(row => row.name == name);
+                    entity.value = value;
+
+                    dbContext.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    string.Format("unable to retrieve app_config by name: {0}", name);
+                }
+            }
+
+            return result;
         }
     }
 }

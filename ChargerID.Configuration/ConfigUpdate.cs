@@ -11,6 +11,8 @@ namespace ChargerID.Configuration
         bool EnableLocationIndicatorDataRefresh { get; }
         bool EnableCampaignUpdate { get; }
         DateTime LastRunDateTime { get; }
+        int RunIntervalDays { get; }
+        DateTime NextRunDateTime { get; }
     }
 
     public class ConfigUpdate : IConfigUpdate
@@ -23,7 +25,9 @@ namespace ChargerID.Configuration
         public const string MaxAdwordsTargetsAttribute = "maxAdwordsTargets";
         public const string EnableLocationIndicatorDataRefreshAttribute = "enableLocationIndicatorDataRefresh";
         public const string EnableCampaignUpdateAttribute = "enableCampaignUpdate";
-        public const string LastRunDataTimeAttribute = "lastRunDateTime";
+        public const string LastRunDateTimeAttribute = "lastRunDateTime";
+        public const string RunIntervalDaysAttribute = "runIntervalDays";
+        public const string NextRunDateTimeAttribute = "nextRunDateTime";
 
         public ConfigUpdate(IConfigurationDataProvider configurationDataProvider)
         {
@@ -88,7 +92,25 @@ namespace ChargerID.Configuration
         {
             get
             {
-                string name = string.Format("{0}/@{1}", SettingNameBase, LastRunDataTimeAttribute);
+                string name = string.Format("{0}/@{1}", SettingNameBase, LastRunDateTimeAttribute);
+                return _configurationDataProvider.GetDateTimeValue(name, defaultValue: null);
+            }
+        }
+
+        public int RunIntervalDays
+        {
+            get
+            {
+                string name = string.Format("{0}/@{1}", SettingNameBase, RunIntervalDaysAttribute);
+                return _configurationDataProvider.GetIntValue(name, defaultValue: null);
+            }
+        }
+
+        public DateTime NextRunDateTime
+        {
+            get
+            {
+                string name = string.Format("{0}/@{1}", SettingNameBase, NextRunDateTimeAttribute);
                 return _configurationDataProvider.GetDateTimeValue(name, defaultValue: null);
             }
         }

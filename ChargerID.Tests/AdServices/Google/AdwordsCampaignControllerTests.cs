@@ -14,18 +14,37 @@ namespace ChargerID.Tests
     public class AdwordsCampaignControllerTests
     {
         [Test]
-        public void UpdateGeoTargetsPut()
+        public void UpdateGeoTargetsPut_AddTarget()
         {
-            AdwordsCampaignController controller = new AdwordsCampaignController();
+            CampaignControllerPut controller = new CampaignControllerPut();
             List<GeoLocation> list = new List<GeoLocation>();
             list.Add(new GeoLocation() { City = "Miami", State = "Florida" });
-            //list.Add(new GeoLocation() { City = "tempe", State = "arizona" });
             UpdateGeoTargetsRequest request = new UpdateGeoTargetsRequest() 
             {
                 GeoLocation = list,
                 UpdateMode = UpdateMode.Add
             };
-            controller.UpdateGeoTargets("927060915", request);
+            
+            UpdateGeoTargetsResponse response = controller.UpdateCampaignGeoTargets("927060915", request);
+
+            Assert.That(response.Success, Is.True);
+        }
+
+        [Test]
+        public void UpdateGeoTargetsPut_RemoveTarget()
+        {
+            CampaignControllerPut controller = new CampaignControllerPut();
+            List<GeoLocation> list = new List<GeoLocation>();
+            list.Add(new GeoLocation() { City = "Miami", State = "Florida" });
+            UpdateGeoTargetsRequest request = new UpdateGeoTargetsRequest()
+            {
+                GeoLocation = list,
+                UpdateMode = UpdateMode.Remove
+            };
+
+            UpdateGeoTargetsResponse response = controller.UpdateCampaignGeoTargets("927060915", request);
+
+            Assert.That(response.Success, Is.True);
         }
     }
 }

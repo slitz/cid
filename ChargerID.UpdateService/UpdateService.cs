@@ -41,6 +41,10 @@ namespace ChargerID.UpdateService
         {
             _logHelper.WriteInfo("Running update.");
 
+            DateTime currentTime = DateTime.Now;
+
+            _dl.UpdateAppConfig("update/@lastRunDateTime", currentTime.ToString());
+
             if (_config.Update.EnableLocationIndicatorDataRefresh)
             {
                 RefreshLocationIndicatorData();
@@ -50,6 +54,8 @@ namespace ChargerID.UpdateService
             {
                 SetAdTargets();
             }
+
+            UpdateNextRunTime(currentTime);
 
             _logHelper.WriteInfo("Update complete.");
         }
@@ -84,14 +90,13 @@ namespace ChargerID.UpdateService
         {
             _logHelper.WriteInfo("Setting advertising targets.");
 
-            // get top n metro areas
+            // get top n metro areas (n is set in the app_config table)
             List<KeyValuePair<string, string>> topLocations = _updateServiceHelper.GetTopStationCountLocations(_config.Update.MaxAdwordsTargets);
 
             // get current targets
             List<KeyValuePair<string, string>> currentTargets = _adServicesClient.GetCurrentAdTargets();
 
             // compare lists to identify targets to add and targets to remove
-            // TODO: fix state comparison
             List<KeyValuePair<string, string>> targetsToRemove = currentTargets.Except(topLocations).ToList();
             List<KeyValuePair<string, string>> targetsToAdd = topLocations.Except(currentTargets).ToList();
 
@@ -145,6 +150,15 @@ namespace ChargerID.UpdateService
                 {
                     _logHelper.WriteError(e.Message);
                 }
+            }
+        }
+
+        // Updates next run time if regularly schedule run has occurred
+        private void UpdateNextRunTime(DateTime currentTime)
+        {
+            if (_config.Update.NextRunDateTime <= currentTime)
+            {
+                _dl.UpdateAppConfig("update/@nextRunDateTime", currentTime.AddDays(_config.Update.RunIntervalDays).ToString());
             }
         }
     }

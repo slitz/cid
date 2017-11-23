@@ -10,8 +10,17 @@ namespace ChargerID.UI.Models
     {
         public List<GeoTarget> CurrentTargetsList { get; set; }
         public List<SystemSettings> SystemSettingsList { get; set; }
-        public DateTime LastSystemRunDate { get; set; }
+        public int MaxAdwordsTargets { get; set; }
+        public string EnableDataUpdateValue { get; set; }
+        public string EnableCampaignUpdateValue { get; set; }
         public List<System.Web.Mvc.SelectListItem> CampaignTargetCountSelectionItems { get; set; }
+        public List<System.Web.Mvc.SelectListItem> EnableDataUpdateSelectionItems { get; set; }
+        public List<System.Web.Mvc.SelectListItem> EnableCampaignUpdateSelectionItems { get; set; }
+        public string NewMaxAdwordsTargets { get; set; }
+        public string NewEnableDataUpdateValue { get; set; }
+        public string NewEnableCampaignUpdateValue { get; set; }
+        public DateTime LastSystemRunDate { get; set; }
+        public DateTime NextSystemRunDate { get; set; }
     }
 
     public class SystemSettings

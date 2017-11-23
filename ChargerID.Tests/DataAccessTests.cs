@@ -59,7 +59,7 @@ namespace ChargerID.Tests
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
             var record = dl.GetAppConfig(1);
             Assert.That(record, Is.InstanceOf<app_config>());
-            Assert.That(record.value, Is.EqualTo("test"));
+            StringAssert.Contains("test", record.value);
         }
 
         [Test]
@@ -100,6 +100,14 @@ namespace ChargerID.Tests
             DataAccess.DataAccess dl = new DataAccess.DataAccess();
             var result = dl.GetStateByStateCode("MI");
             Assert.That(result.state_name, Is.EqualTo("Michigan"));
+        }
+
+        [Test]
+        public void UpdateAppConfigByNameTest()
+        {
+            DataAccess.DataAccess dl = new DataAccess.DataAccess();
+            var result = dl.UpdateAppConfig(@"test/@test", "test" + DateTime.Now.ToFileTimeUtc().ToString());
+            Assert.That(result, Is.EqualTo(true));
         }
     }
 }

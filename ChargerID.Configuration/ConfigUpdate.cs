@@ -13,6 +13,7 @@ namespace ChargerID.Configuration
         DateTime LastRunDateTime { get; }
         int RunIntervalDays { get; }
         DateTime NextRunDateTime { get; }
+        bool ManualSchedule { get; }
     }
 
     public class ConfigUpdate : IConfigUpdate
@@ -28,6 +29,7 @@ namespace ChargerID.Configuration
         public const string LastRunDateTimeAttribute = "lastRunDateTime";
         public const string RunIntervalDaysAttribute = "runIntervalDays";
         public const string NextRunDateTimeAttribute = "nextRunDateTime";
+        public const string ManualScheduleAttribute = "manualSchedule";
 
         public ConfigUpdate(IConfigurationDataProvider configurationDataProvider)
         {
@@ -112,6 +114,15 @@ namespace ChargerID.Configuration
             {
                 string name = string.Format("{0}/@{1}", SettingNameBase, NextRunDateTimeAttribute);
                 return _configurationDataProvider.GetDateTimeValue(name, defaultValue: null);
+            }
+        }
+
+        public bool ManualSchedule
+        {
+            get
+            {
+                string name = string.Format("{0}/@{1}", SettingNameBase, ManualScheduleAttribute);
+                return _configurationDataProvider.GetBoolValue(name, defaultValue: null);
             }
         }
     }

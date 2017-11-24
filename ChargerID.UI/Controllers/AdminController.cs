@@ -48,6 +48,9 @@ namespace ChargerID.UI.Controllers
             adminModel.EnableCampaignUpdateSelectionItems = GetBooleanSelectionItems(adminModel.EnableCampaignUpdateValue);
             adminModel.LastSystemRunDate = _config.Update.LastRunDateTime;
             adminModel.NextSystemRunDate = _config.Update.NextRunDateTime;
+            adminModel.ManualSchedule = _config.Update.ManualSchedule;
+            adminModel.ManualScheduleSelectionItems = GetBooleanSelectionItems(adminModel.ManualSchedule.ToString());
+            adminModel.ManualScheduleRunDate = DateTime.Now.Date.AddDays(1).ToString();
             return View(adminModel);
         }
 
@@ -63,6 +66,31 @@ namespace ChargerID.UI.Controllers
                 bool updateEnableCampaignUpdateValueResult = _data.UpdateAppConfig("update/@enableCampaignUpdate", model.NewEnableCampaignUpdateValue);
 
                 if (updateMaxAdwordsTargetsResult && updateEnableUpdateDataValueResult && updateEnableCampaignUpdateValueResult)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch
+            {
+
+            }
+            return View();
+        }
+
+        // Schedule system run
+        [HttpPost]
+        [Authorize]
+        public ActionResult Schedule(AdminModel model)
+        {
+            try
+            {
+                bool updateManualScheduleResult = _data.UpdateAppConfig("update/@manualSchedule", model.ManualSchedule.ToString());
+
+                if (updateManualScheduleResult)
                 {
                     return RedirectToAction("Index");
                 }

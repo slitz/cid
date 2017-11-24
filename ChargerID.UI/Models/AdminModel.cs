@@ -21,6 +21,9 @@ namespace ChargerID.UI.Models
         public string NewEnableCampaignUpdateValue { get; set; }
         public DateTime LastSystemRunDate { get; set; }
         public DateTime NextSystemRunDate { get; set; }
+        public bool ManualSchedule { get; set; }
+        public List<System.Web.Mvc.SelectListItem> ManualScheduleSelectionItems { get; set; }
+        public string ManualScheduleRunDate { get; set; }
     }
 
     public class SystemSettings

@@ -29,58 +29,66 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-7" style="float:none">
-                <div class="panel panel-default" style="float:left">
-            <div class="panel-heading">Current Campaign Targets</div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                <table id="campaign-targets-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
-                    <thead>
-                        <tr>
-                            <th>City</th>
-                            <th>State</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @* populate dynamically *@
-                    </tbody>
-                </table>
-                </div>
-            </div>
-        </div>
-            </div>
-            <div class="col-md-7" style="float:none">
-                <div style="float:right">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">System Settings</div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                            <table id="system-settings-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+            <div class="col-md-4">
+                <div class="panel panel-default" style="float:none">
+                    <div class="panel-heading">Current Campaign Targets</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                        <table id="campaign-targets-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Value</th>
+                                    <th>City</th>
+                                    <th>State</th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                @* populate dynamically *@
-                                </tbody>
-                            </table>
-                            <div><button id="update-btn" type="submit" class="btn btn-primary center-block">Update Settings</button></div>
-                            </div>
+                            </thead>
+                            <tbody>
+                            @* populate dynamically *@
+                            </tbody>
+                        </table>
                         </div>
                     </div>
-                     <div class="panel panel-default">
-                        <div class="panel-heading">System Info</div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                            <table id="system-runtime-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">System Settings</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                        <table id="system-settings-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Value</th>
+                            </tr>
+                            </thead>
                             <tbody>
-                                <tr><td>Last Run Time:</td><td style="text-align:center">@Model.LastSystemRunDate</td></tr>
-                                <tr><td>Next Run Time:</td><td style="text-align:center">@Model.NextSystemRunDate</td></tr>
+                            @* populate dynamically *@
                             </tbody>
-                            </table>
+                        </table>
+                        <div><button id="update-btn" type="submit" class="btn btn-primary center-block">Update Settings</button></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">System Info</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                        <table id="system-runtime-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" style="float:none">
+                        <tbody>
+                            <tr><td>Last Run Time:</td><td style="text-align:center">@Model.LastSystemRunDate</td></tr>
+                            @if (Model.ManualSchedule)
+                            {
+                                <tr><td>Next Run Time:</td><td style="text-align:center">@Model.ManualScheduleRunDate</td></tr>
+                            }
+                            else
+                            {
+                                <tr><td>Next Run Time:</td><td style="text-align:center">@Model.NextSystemRunDate</td></tr>
+                            }
+                        </tbody>
+                        </table>
+                        <div><button id="schedule-run-btn" type="submit" class="btn btn-primary center-block">Schedule Run</button></div>
                         </div>
                     </div>
                 </div>
@@ -140,6 +148,38 @@
     </div>
 }
 
+@* Model for scheduling a run of the UpdateService *@
+@using (Html.BeginForm("Schedule", "Admin", new { ManualSchedule = @Model.ManualSchedule }, FormMethod.Post))
+{
+    <div id="manual-schedule-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Schedule Update</h4>
+          </div>
+            <div class="modal-body" style="overflow-y: auto; max-height: 400px;">
+                <table id="manual-schedule-table" class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>Manual Schedule</td>
+                            <td>@Html.DropDownListFor(m => m.ManualSchedule, @Model.ManualScheduleSelectionItems,
+                                    new Dictionary<string, object>() {{"class", "form-control"}, {"style", "width:100%"}, {"value", @Model.ManualSchedule}})
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="text-align:center">Setting this value to true will trigger a system update within 24 hours.</div>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="schedule-btn" onclick="$(this).closest('form').submit(); return false;">Submit</button>
+            <button type="button" class="btn btn-link" data-dismiss="modal" aria-label="Close">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+}
+
 @section scripts
 {
     <script type="text/javascript">
@@ -180,6 +220,21 @@
             });
 
             $("#submit-btn").click(function (e) {
+                // Enable the Font Awesome animated spinner image on the button. Its an i tag within the button's content.
+                $(this).children("i").toggleClass("fa-spinner fa-spin");
+
+                // Disable button to prevent user from selecting it a second time while the post back is in process.  
+                // Note: This button also triggers a form post so don't disable the click action.
+                $(this).attr('disabled', 'disabled');
+                $(this).parent("form").submit();
+                e.preventDefault();
+            });
+
+            $("#schedule-run-btn").click(function(e) {
+                var modal = $('#manual-schedule-modal').modal('show');
+            });
+
+            $("#schedule-btn").click(function (e) {
                 // Enable the Font Awesome animated spinner image on the button. Its an i tag within the button's content.
                 $(this).children("i").toggleClass("fa-spinner fa-spin");
 

@@ -39,30 +39,41 @@ namespace ChargerID.UpdateService
 
         public void RunUpdate()
         {
-            _logHelper.WriteInfo("Running update.");
+            _logHelper.WriteInfo("UpdateService started.");
 
             DateTime currentTime = DateTime.Now;
 
-            _dl.UpdateAppConfig("update/@lastRunDateTime", currentTime.ToString());
+            _logHelper.WriteInfo("Checking configs...");
+            DateTime nextRunDateTime = _config.Update.NextRunDateTime;
+            bool manualSchedule = _config.Update.ManualSchedule;
 
-            if (_config.Update.EnableLocationIndicatorDataRefresh)
+            _logHelper.WriteInfo("NextRunDateTime: " + nextRunDateTime);
+            _logHelper.WriteInfo("Manual schedule: " + manualSchedule);
+
+            if (currentTime >= nextRunDateTime || manualSchedule)
             {
-                RefreshLocationIndicatorData();
+
+                _dl.UpdateAppConfig("update/@lastRunDateTime", currentTime.ToString());
+
+                if (_config.Update.EnableLocationIndicatorDataRefresh)
+                {
+                    RefreshLocationIndicatorData();
+                }
+
+                if (_config.Update.EnableCampaignUpdate)
+                {
+                    SetAdTargets();
+                }
+
+                UpdateAppConfiguration(currentTime, nextRunDateTime, manualSchedule);
             }
 
-            if (_config.Update.EnableCampaignUpdate)
-            {
-                SetAdTargets();
-            }
-
-            UpdateNextRunTime(currentTime);
-
-            _logHelper.WriteInfo("Update complete.");
+            _logHelper.WriteInfo("UpdateService stopped.");
         }
 
         private void RefreshLocationIndicatorData()
         {
-            _logHelper.WriteInfo("Refreshing location indicator data.");
+            _logHelper.WriteInfo("Location indicator data refresh started.");
 
             IList<metropolitan_area> metroAreas = _dl.GetAllMetropolitanAreas();
 
@@ -84,11 +95,13 @@ namespace ChargerID.UpdateService
             {
                 _logHelper.WriteError(ex.Message);
             }
+
+            _logHelper.WriteInfo("Location indicator data refresh completed.");
         }
 
         private void SetAdTargets()
         {
-            _logHelper.WriteInfo("Setting advertising targets.");
+            _logHelper.WriteInfo("Set advertising targets started.");
 
             // get top n metro areas (n is set in the app_config table)
             List<KeyValuePair<string, string>> topLocations = _updateServiceHelper.GetTopStationCountLocations(_config.Update.MaxAdwordsTargets);
@@ -151,14 +164,25 @@ namespace ChargerID.UpdateService
                     _logHelper.WriteError(e.Message);
                 }
             }
+
+            _logHelper.WriteInfo("Set advertising targets completed.");
         }
 
-        // Updates next run time if regularly schedule run has occurred
-        private void UpdateNextRunTime(DateTime currentTime)
+        // Updates next run time and manual schedule flag in the app_config DB table
+        private void UpdateAppConfiguration(DateTime currentTime, DateTime nextRunDateTime, bool manualRun)
         {
-            if (_config.Update.NextRunDateTime <= currentTime)
+            // if nextRunDateTime is less than the current time then the current run was the regularly scheduled run and the nextRunDateTime
+            // should be updated to reflect the next regularly scheduled run
+            if (nextRunDateTime <= currentTime)
             {
                 _dl.UpdateAppConfig("update/@nextRunDateTime", currentTime.AddDays(_config.Update.RunIntervalDays).ToString());
+            }
+
+            // if manual run flag is true set it to false; this will ensure that the next run time displayed on the UI correctly reflects the 
+            // next run time
+            if (manualRun)
+            {
+                _dl.UpdateAppConfig("update/@manualSchedule", "false");
             }
         }
     }

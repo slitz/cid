@@ -3,6 +3,7 @@ using NUnit.Framework;
 using ChargerID.Business;
 using ChargerID.Business.Partner.AdServices.Google;
 using System.Collections.Generic;
+using ChargerID.Business.Models;
 
 namespace ChargerID.Tests
 {
@@ -14,32 +15,45 @@ namespace ChargerID.Tests
         public void GetAdwordsCampaigns()
         {
             AdwordsClient client = new AdwordsClient();
-            client.GetCampaigns();
+            List<AdwordsCampaign> result = client.GetCampaigns();
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
         public void GetCampaignGeoTargets()
         {
             AdwordsClient client = new AdwordsClient();
-            client.GetCampaignGeoTargets("931755099");
+            List<GeoTarget> result = client.GetCampaignGeoTargets("931755099");
+            Assert.That(result, Is.Not.Null);
         }
 
-        //[Test]
-        //public void AddCampaignGeoTargets()
-        //{
-        //    AdwordsClient client = new AdwordsClient();
-        //    List<KeyValuePair<string,string>> list = new List<KeyValuePair<string,string>>();
-        //    list.Add(new KeyValuePair<string, string>("Dallas", "Texas"));
-        //    client.UpdateCampaignGeoTargets("927060915", list, Google.Api.Ads.AdWords.v201708.Operator.ADD);
-        //}
+        [Test]
+        public void GetCampaignGeoTargets_EmptyCampaignId()
+        {
+            AdwordsClient client = new AdwordsClient();
+            try
+            {
+                client.GetCampaignGeoTargets("");
+                Assert.That(false);
+            }
+            catch (Exception e)
+            {
+                Assert.That(e.Message, Is.EqualTo("Input string was not in a correct format."));
+            }
+        }
 
-        //[Test]
-        //public void RemoveCampaignGeoTargets()
-        //{
-        //    AdwordsClient client = new AdwordsClient();
-        //    List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
-        //    list.Add(new KeyValuePair<string, string>("Dallas", "Texas"));
-        //    client.UpdateCampaignGeoTargets("927060915", list, Google.Api.Ads.AdWords.v201708.Operator.REMOVE);
-        //}
+        [Test]
+        public void GetCampaignGeoTargets_NonExistingCampaignId()
+        {
+            AdwordsClient client = new AdwordsClient();
+            try
+            {
+                client.GetCampaignGeoTargets("123456789");
+            }
+            catch (Exception e)
+            {
+                Assert.That(e.Message, Is.EqualTo("Campaign not found."));
+            }
+        }
     }
 }

@@ -46,5 +46,27 @@ namespace ChargerID.Tests
 
             Assert.That(response.Success, Is.True);
         }
+
+        [Test]
+        public void UpdateGeoTargetsPut_EmptyGeoLocationList()
+        {
+            CampaignControllerPut controller = new CampaignControllerPut();
+            List<GeoLocation> list = new List<GeoLocation>();
+            UpdateGeoTargetsRequest request = new UpdateGeoTargetsRequest()
+            {
+                GeoLocation = list,
+                UpdateMode = UpdateMode.Remove
+            };
+
+            try
+            {
+                UpdateGeoTargetsResponse response = controller.UpdateCampaignGeoTargets("927060915", request);
+                Assert.That(false);
+            }
+            catch(Exception e)
+            {
+                Assert.That(e.Message, Is.Not.Empty);
+            }
+        }
     }
 }

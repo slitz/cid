@@ -13,7 +13,7 @@ namespace ChargerID.Configuration
         DateTime GetDateTimeValue(string name, DateTime? defaultValue);
     }
 
-    class ConfigurationDataProvider : IConfigurationDataProvider
+    public class ConfigurationDataProvider : IConfigurationDataProvider
     {
         private readonly IConfigurationWrapper _configurationWrapper;
         private List<AppConfiguration> _configurationItems;
